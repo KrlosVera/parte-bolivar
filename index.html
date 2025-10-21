@@ -69,7 +69,20 @@
             background-color: #fff3f3;
             border-color: #e00;
         }
-        .botones { display: flex; gap: 8px; margin-top: 8px; }
+        /* AJUSTE: Contenedor para botones grandes y pequeño de limpiar */
+        .botones-principales { 
+            display: flex; 
+            gap: 8px; 
+            margin-top: 8px; 
+            align-items: center; /* Alinear el botón pequeño */
+        }
+        /* AJUSTE: Estilo para el botón de limpiar */
+        #btnLimpiar {
+            background: #eeb417; /* Gris discreto */
+            flex: 0 0 auto; /* No crecer */
+            padding: 10px 12px;
+            font-size: 14px;
+        }
         button {
             flex: 1;
             background: #004aad;
@@ -82,7 +95,7 @@
         }
         button.secondary { background: #28a745; }
         button.warning { background: #ffc107; color: #333; }
-        button.logout { 
+        button.logout {
             flex: initial; /* No crecer tanto */
             background: #dc3545; /* Rojo */
             padding: 5px 10px; /* Más discreto */
@@ -152,10 +165,10 @@
         /* Ocultar modales por defecto */
         #master-key-modal, #config-pin-modal {
             display: none;
-            background: rgba(0,0,0,0.5); 
+            background: rgba(0,0,0,0.5);
         }
         #login-overlay {
-            display: flex; 
+            display: flex;
         }
         
         /* Contenedor de la app con el botón de salir */
@@ -220,9 +233,10 @@
 
         <div id="secciones"></div>
 
-        <div class="botones">
+        <div class="botones-principales">
             <button id="btnCalcular">Calcular Totales</button>
-            <button class="secondary" id="btnExportar">Exportar Parte a TXT</button>
+            <button class="secondary" id="btnExportar">Exportar Parte</button>
+            <button id="btnLimpiar" class="warning" title="Limpiar todos los datos ingresados">🧹 Limpiar</button>
         </div>
 
         <div class="resumen" id="resultado">
@@ -236,9 +250,9 @@
 
     <div class="footer">
         <p>
-            Código desarrollado por: **Carlos Vera**
+            Código desarrollado por: Carlos Alberto Vera
             <br>
-            **Escuela de Policia Gabriel Gonzalez Lopez**
+            Escuela de Policia Gabriel Gonzalez Lopez
             <br>
             &copy; 2025. Todos los derechos reservados.
         </p>
@@ -249,17 +263,17 @@
 
         const PIN_STORAGE_KEY = 'parte_pin_hash';
         // PIN de ACCESO inicial por defecto (si no hay uno guardado en localStorage)
-        const DEFAULT_ACCESS_PIN = '1234'; 
+        const DEFAULT_ACCESS_PIN = '1234';
         // CLAVE MAESTRA de CONFIGURACIÓN (fija en el código): 9826
-        const MASTER_KEY = '9826'; 
+        const MASTER_KEY = '9826';
         // TIEMPO DE INACTIVIDAD (en milisegundos): 30 minutos * 60 segundos * 1000 ms
-        const INACTIVITY_TIMEOUT = 30 * 60 * 1000; 
+        const INACTIVITY_TIMEOUT = 30 * 60 * 1000;
 
         let activityTimer;
 
         // Hashing simple para ofuscar el PIN en localStorage
         function hash(pin) {
-            return btoa(pin + 'carlos'); 
+            return btoa(pin + 'carlos');
         }
 
         function getStoredPinHash() {
@@ -287,12 +301,12 @@
             clearTimeout(activityTimer);
             localStorage.removeItem('parte_authenticated_hash');
             // Muestra el PIN actual para el usuario antes de desloguearse (para recordar)
-            displayCurrentPin(); 
+            displayCurrentPin();
             document.getElementById('app-content').style.display = 'none';
             document.getElementById('login-overlay').style.display = 'flex';
             alert("Sesión cerrada automáticamente por inactividad (30 minutos).");
         }
-        
+
         function checkAuthentication() {
             const storedAuthHash = localStorage.getItem('parte_authenticated_hash');
             const requiredPinHash = getStoredPinHash();
@@ -305,12 +319,12 @@
             resetTimer(); // Inicia el temporizador de inactividad
             calcularParte(); // Inicializar la app
         }
-        
+
         // Muestra el PIN que el usuario debe usar
         function displayCurrentPin() {
             const currentHash = getStoredPinHash();
             const pinDisplay = document.getElementById('current-pin-display');
-            
+
             // Si el PIN es el valor por defecto, lo mostramos
             if (currentHash === hash(DEFAULT_ACCESS_PIN)) {
                 pinDisplay.textContent = `${DEFAULT_ACCESS_PIN} (por defecto)`;
@@ -390,17 +404,17 @@
 
             const newPinHash = hash(newPin);
             localStorage.setItem(PIN_STORAGE_KEY, newPinHash);
-            localStorage.setItem('parte_authenticated_hash', newPinHash); 
-            
+            localStorage.setItem('parte_authenticated_hash', newPinHash);
+
             messageDiv.style.color = 'green';
             messageDiv.textContent = '¡PIN de acceso cambiado y guardado exitosamente en el navegador!';
-            
+
             // Actualizar la visualización del PIN actual en el login
             displayCurrentPin();
 
             setTimeout(() => {
                 document.getElementById('config-pin-modal').style.display = 'none';
-                messageDiv.style.color = 'red'; 
+                messageDiv.style.color = 'red';
                 newPinInput.value = '';
                 confirmPinInput.value = '';
             }, 2500); // 2.5 segundos para que se pueda leer la nota
@@ -432,7 +446,7 @@
             // Cancelar Clave Maestra
             document.getElementById('btn-close-master-key-modal').addEventListener('click', () => {
                 document.getElementById('master-key-modal').style.display = 'none';
-                document.getElementById('login-overlay').style.display = 'flex'; 
+                document.getElementById('login-overlay').style.display = 'flex';
             });
 
             // Guardar Nuevo PIN
@@ -455,7 +469,7 @@
             const contenedor = document.getElementById('secciones');
             const resultadoDiv = document.getElementById('resultado');
             const detalleNovedadesDiv = document.getElementById('detalleNovedades');
-            const ordenNovedades = [];
+            const ordenDeLlenado = new Set(); 
             const NUM_SECCIONES = 5;
 
             // --- 1. CREACIÓN DEL DOM ---
@@ -491,68 +505,87 @@
             function adjuntarListeners() {
                 document.getElementById('btnCalcular').addEventListener('click', calcularParte);
                 document.getElementById('btnExportar').addEventListener('click', exportarParte);
-                
+                // AJUSTE: Listener para el botón de Limpiar
+                document.getElementById('btnLimpiar').addEventListener('click', limpiarTodo); 
+
                 for (let i = 1; i <= NUM_SECCIONES; i++) {
                     const inputs = [
                         document.getElementById(`efectiva${i}`),
                         document.getElementById(`disponible${i}`)
                     ];
                     inputs.forEach(input => {
-                        input.addEventListener('input', () => actualizarNovedades(i));
+                        input.addEventListener('input', () => actualizarLlenado(i)); 
                     });
                 }
             }
 
-            // --- 3. LÓGICA DE NEGOCIO ---
+            // --- 3. LÓGICA DE NEGOCIO (AJUSTADA) ---
 
             function getDatosSeccion(i) {
                 const efInput = document.getElementById(`efectiva${i}`);
                 const dispInput = document.getElementById(`disponible${i}`);
                 const novInput = document.getElementById(`novedades${i}`);
 
+                // 1. Obtener y Limpiar Ceros de Efectiva/Disponible
                 let e = parseInt(efInput.value) || 0;
                 let d = parseInt(dispInput.value) || 0;
 
+                // Si el valor numérico es 0 pero el usuario ingresó algo, limpiamos el input visualmente
+                if (e > 0) {
+                    efInput.value = e;
+                } else if (efInput.value.length > 0) { 
+                    efInput.value = ''; 
+                }
+                
+                if (d > 0) {
+                    dispInput.value = d;
+                } else if (dispInput.value.length > 0) {
+                    dispInput.value = ''; 
+                }
+
+                // 2. Validaciones (mínimos)
                 if (e < 0) e = 0;
                 if (d < 0) d = 0;
 
                 dispInput.classList.remove('invalido');
 
+                // 3. Validar Disponible no sea mayor a Efectiva
                 if (d > e) {
                     d = e;
                     dispInput.classList.add('invalido');
                     setTimeout(() => {
                         dispInput.classList.remove('invalido');
                     }, 1500);
+                    // Actualizar el input con el valor corregido (si es necesario)
+                    if (d !== parseInt(dispInput.value)) {
+                       dispInput.value = d > 0 ? d : '';
+                    }
                 }
-
-                efInput.value = e;
-                dispInput.value = d;
                 
+                // 4. Calcular Novedades
                 const n = Math.max(0, e - d);
-                novInput.value = n;
+                // AJUSTE: Mantener el 0 si el resultado es 0.
+                novInput.value = n; 
 
                 return { e, d, n };
             }
 
-            function actualizarNovedades(i) {
-                const { n } = getDatosSeccion(i);
-
-                const indexEnOrden = ordenNovedades.indexOf(i);
+            // Función para rastrear el orden de llenado
+            function actualizarLlenado(i) {
+                const { e, d } = getDatosSeccion(i); 
                 
-                // Si tiene novedades, la sección va al final de la lista de reporte
-                if (n > 0) {
-                    if (indexEnOrden !== -1) {
-                        ordenNovedades.splice(indexEnOrden, 1);
-                    }
-                    ordenNovedades.push(i);
+                if (e > 0 || d > 0) {
+                    // Mover la sección al final del orden (la más reciente)
+                    ordenDeLlenado.delete(i); 
+                    ordenDeLlenado.add(i);
                 } else {
-                    // Si no tiene novedades, la quitamos del orden de reporte
-                    if (indexEnOrden !== -1) {
-                        ordenNovedades.splice(indexEnOrden, 1);
-                    }
+                    // Si ambos campos están vacíos o en 0, la removemos del orden
+                    ordenDeLlenado.delete(i);
                 }
+                // Volver a calcular para actualizar el resumen inmediatamente
+                calcularParte();
             }
+
 
             function recolectarYCalcularTotales() {
                 let totalEfectiva = 0;
@@ -560,8 +593,10 @@
                 let totalNovedades = 0;
                 const datosSecciones = [];
 
+                // Recolectar y calcular los datos de todas las secciones
                 for (let i = 1; i <= NUM_SECCIONES; i++) {
-                    const datosSeccion = getDatosSeccion(i);
+                    // Llama a getDatosSeccion para limpiar los '0's de Efec/Disp y actualizar Novedades
+                    const datosSeccion = getDatosSeccion(i); 
                     datosSecciones.push(datosSeccion);
 
                     totalEfectiva += datosSeccion.e;
@@ -570,31 +605,27 @@
                 }
 
                 const listOrdenada = [];
-                const seccionesReportadas = new Set();
-
-                // 1. Añadir secciones que SÍ reportaron novedades (en orden de reporte)
-                ordenNovedades.forEach(i => {
-                    if (!seccionesReportadas.has(i)) {
-                        listOrdenada.push({ seccion: i, novedades: datosSecciones[i - 1].n });
-                        seccionesReportadas.add(i);
+                
+                Array.from(ordenDeLlenado).forEach(i => {
+                    if (i >= 1 && i <= NUM_SECCIONES) { 
+                        const datos = datosSecciones[i - 1];
+                        listOrdenada.push({ 
+                            seccion: i, 
+                            novedades: datos.n,
+                            efectiva: datos.e,
+                            disponible: datos.d
+                        });
                     }
                 });
 
-                // 2. Añadir secciones restantes (las que tienen 0 novedades) en orden numérico
-                for (let i = 1; i <= NUM_SECCIONES; i++) {
-                    if (!seccionesReportadas.has(i)) {
-                        listOrdenada.push({ seccion: i, novedades: datosSecciones[i - 1].n });
-                    }
-                }
-                
                 return {
                     totales: { totalEfectiva, totalDisponible, totalNovedades },
                     secciones: datosSecciones,
-                    listOrdenada: listOrdenada
+                    listOrdenada: listOrdenada 
                 };
             }
 
-            // --- 4. FUNCIONES DE BOTONES (Cálculo y Exportación) ---
+            // --- 4. FUNCIONES DE BOTONES (Cálculo, Exportación y Limpieza) ---
 
             function calcularParte() {
                 const datos = recolectarYCalcularTotales();
@@ -606,30 +637,39 @@
                     <p>Novedades Totales: ${datos.totales.totalNovedades}</p>
                 `;
 
-                detalleNovedadesDiv.innerHTML = `<strong>Orden de reporte completo:</strong><br>` +
-                    datos.listOrdenada
-                        .map(s => {
-                            const textoNov = s.novedades > 0 ? `→ ${s.novedades} nov.` : `(Sin novedad)`;
-                            return `${s.seccion}ª Sección ${textoNov}`;
-                        }).join('<br>');
+                // Mostrar el orden de llenado completo
+                detalleNovedadesDiv.innerHTML = `<strong>Orden de Parte:</strong><br>` +
+                    (datos.listOrdenada.length === 0 
+                        ? '<em>No hay secciones completadas para el reporte.</em>' 
+                        : datos.listOrdenada
+                            .map(s => {
+                                const textoNov = s.novedades > 0 
+                                    ? `→ ${s.novedades} nov.` 
+                                    : `(Sin novedad)`;
+                                return `${s.seccion}ª Sección ${textoNov}`;
+                            }).join('<br>')
+                    );
             }
 
             function exportarParte() {
                 const datos = recolectarYCalcularTotales();
-                
+
                 let texto = `Parte de Compañía 'Simón Bolívar' - ${new Date().toLocaleString()}\n\n`;
-                
-                datos.secciones.forEach((s, index) => {
-                    const i = index + 1;
-                    texto += `${i}ª Sección → Efectiva: ${s.e}, Disponible: ${s.d}, Novedades: ${s.n}\n`;
+
+                datos.listOrdenada.forEach((s) => {
+                    texto += `${s.seccion}ª Sección → Efectiva: ${s.efectiva}, Disponible: ${s.disponible}, Novedades: ${s.novedades}\n`;
                 });
+                
+                if (datos.listOrdenada.length === 0) {
+                     texto += `(No se ingresaron datos en ninguna sección para el reporte)\n`;
+                }
                 
                 texto += `\nTotales:\n`;
                 texto += `Fuerza Efectiva: ${datos.totales.totalEfectiva}\n`;
                 texto += `Fuerza Disponible: ${datos.totales.totalDisponible}\n`;
                 texto += `Novedades: ${datos.totales.totalNovedades}\n\n`;
 
-                texto += `Orden de reporte:\n`;
+                texto += `Orden de Parte:\n`;
                 const listaTexto = datos.listOrdenada.map(s => {
                     const textoNov = s.novedades > 0 ? `(${s.novedades} nov.)` : `(Sin novedad)`;
                     return `${s.seccion}ª Secc. ${textoNov}`;
@@ -648,9 +688,24 @@
                 enlace.click();
                 URL.revokeObjectURL(enlace.href);
             }
+            
+            // AJUSTE: Función para limpiar todos los campos
+            function limpiarTodo() {
+                if (confirm('¿Estás seguro de que deseas limpiar TODOS los datos de las secciones? Esta acción no se puede deshacer.')) {
+                    for (let i = 1; i <= NUM_SECCIONES; i++) {
+                        document.getElementById(`efectiva${i}`).value = '';
+                        document.getElementById(`disponible${i}`).value = '';
+                        document.getElementById(`novedades${i}`).value = '0'; // Se restablece a 0
+                    }
+                    ordenDeLlenado.clear(); // Limpia el orden de llenado
+                    calcularParte(); // Recalcula para limpiar el resumen
+                    alert('Todos los campos han sido limpiados.');
+                }
+            }
+
 
             // --- 5. INICIALIZACIÓN ---
-            
+
             crearSecciones();
             adjuntarListeners();
             setupSecurityListeners();
