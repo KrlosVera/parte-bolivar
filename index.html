@@ -3,308 +3,728 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Parte de Compañía - Simón Bolívar</title>
+    <title>Parte de Compañía - Policía Nacional de Colombia</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f0f4ff;
+        * {
             margin: 0;
-            padding: 10px;
-            color: #222;
-        }
-        h1 {
-            text-align: center;
-            color: #003399;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-        .seccion, .footer, #login-overlay, #master-key-modal, #config-pin-modal {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .fila {
-            display: flex;
-            justify-content: space-between;
-            gap: 6px;
-            align-items: center;
-            margin-top: 6px;
-        }
-        .seccion h3 {
-            margin: 0;
-            font-size: 1em;
-            color: #003399;
-            text-align: center;
-        }
-        label {
-            display: block;
-            font-size: 0.78em;
-            font-weight: 600;
-            margin-bottom: 4px;
-            text-align: center;
-        }
-        .campo-grupo {
-            flex: 1 1 42%;
-        }
-        .campo-grupo.nov {
-            flex: 1 1 14%;
-        }
-        input {
-            padding: 8px;
-            font-size: 15px;
-            border: 1px solid #c1c7d0;
-            border-radius: 6px;
-            text-align: center;
+            padding: 0;
             box-sizing: border-box;
-            width: 100%;
-            transition: border-color 0.3s, background-color 0.3s;
-        }
-        input[readonly] {
-            background: #f3f3f3;
-            color: #333;
-        }
-        input.invalido {
-            background-color: #fff3f3;
-            border-color: #e00;
-        }
-        /* AJUSTE: Contenedor para botones grandes y pequeño de limpiar */
-        .botones-principales { 
-            display: flex; 
-            gap: 8px; 
-            margin-top: 8px; 
-            align-items: center; /* Alinear el botón pequeño */
-        }
-        /* AJUSTE: Estilo para el botón de limpiar */
-        #btnLimpiar {
-            background: #eeb417; /* Gris discreto */
-            flex: 0 0 auto; /* No crecer */
-            padding: 10px 12px;
-            font-size: 14px;
-        }
-        button {
-            flex: 1;
-            background: #004aad;
-            color: white;
-            font-size: 15px;
-            border: none;
-            border-radius: 8px;
-            padding: 10px;
-            cursor: pointer;
-        }
-        button.secondary { background: #28a745; }
-        button.warning { background: #ffc107; color: #333; }
-        button.logout {
-            flex: initial; /* No crecer tanto */
-            background: #dc3545; /* Rojo */
-            padding: 5px 10px; /* Más discreto */
-            font-size: 13px;
-        }
-        button:hover { opacity: 0.95; }
-        .resumen {
-            background: #eaf3ff;
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 12px;
-            text-align: center;
-            font-size: 15px;
-            font-weight: 600;
-            color: #003366;
-        }
-        .lista-novedades {
-            text-align: left;
-            margin-top: 8px;
-            font-size: 14px;
-            color: #222;
-            line-height: 1.4;
-        }
-        .footer {
-            margin-top: 20px;
-            padding: 8px;
-            font-size: 0.75em;
-            color: #555;
-            text-align: center;
-            box-shadow: none;
         }
 
-        /* --- Estilos para Overlays/Modales --- */
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #005236 0%, #003d28 100%);
+            min-height: 100vh;
+            padding: 20px 10px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header con escudo */
+        .header {
+            background: linear-gradient(to right, #FCD116, #f4c430);
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #005236;
+            position: relative;
+        }
+
+        .header::before {
+            content: '★';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: #005236;
+        }
+
+        .header::after {
+            content: '★';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: #005236;
+        }
+
+        .header h1 {
+            color: #005236;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .header .subtitle {
+            color: #003d28;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        /* Panel de información */
+        .info-panel {
+            background: white;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            border-bottom: 3px solid #FCD116;
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-field label {
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #005236;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .info-field input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .info-field input:focus {
+            outline: none;
+            border-color: #FCD116;
+            box-shadow: 0 0 0 3px rgba(252, 209, 22, 0.2);
+        }
+
+        /* Secciones */
+        .seccion {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 5px solid #FCD116;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .seccion h3 {
+            color: #005236;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .seccion h3::before {
+            content: '▶';
+            color: #FCD116;
+            font-size: 0.8em;
+        }
+
+        .fila {
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .campo-grupo label {
+            display: block;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #005236;
+            text-align: center;
+        }
+
+        .campo-grupo input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .campo-grupo input:focus {
+            outline: none;
+            border-color: #FCD116;
+            box-shadow: 0 0 0 3px rgba(252, 209, 22, 0.2);
+        }
+
+        .campo-grupo input[readonly] {
+            background: #f0f0f0;
+            font-weight: bold;
+            color: #005236;
+        }
+
+        /* Contenedor de novedades con botón */
+        .novedades-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .novedades-container input {
+            flex: 1;
+        }
+
+        .btn-detalle-nov {
+            background: #FCD116;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .btn-detalle-nov:hover:not(:disabled) {
+            background: #005236;
+            transform: scale(1.1);
+        }
+
+        .btn-detalle-nov:disabled {
+            background: #ddd;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .btn-detalle-nov.tiene-datos {
+            background: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Modal de detalles de novedades */
+        .modal-novedades {
+            max-width: 500px;
+        }
+
+        .modal-novedades textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+            margin: 10px 0;
+        }
+
+        .modal-novedades textarea:focus {
+            outline: none;
+            border-color: #FCD116;
+            box-shadow: 0 0 0 3px rgba(252, 209, 22, 0.2);
+        }
+
+        .sugerencias-novedades {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.85em;
+        }
+
+        .sugerencias-novedades .titulo-sugerencias {
+            font-weight: bold;
+            color: #005236;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .chip-sugerencia {
+            display: inline-block;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 4px 10px;
+            margin: 3px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+
+        .chip-sugerencia:hover {
+            background: #FCD116;
+            border-color: #FCD116;
+            transform: translateY(-2px);
+        }
+
+        .contador-caracteres {
+            text-align: right;
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .campo-grupo input.invalido {
+            background-color: #ffe6e6;
+            border-color: #dc3545;
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Botones */
+        .botones-principales {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #005236, #003d28);
+            color: #FCD116;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #FCD116, #f4c430);
+            color: #005236;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Resumen */
+        .resumen {
+            background: linear-gradient(135deg, #005236, #003d28);
+            color: #FCD116;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .resumen h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-transform: uppercase;
+        }
+
+        .resumen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+
+        .resumen-item {
+            background: rgba(252, 209, 22, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #FCD116;
+        }
+
+        .resumen-item .label {
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .resumen-item .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        /* Lista de novedades */
+        .lista-novedades {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .lista-novedades h4 {
+            color: #005236;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            border-bottom: 2px solid #FCD116;
+            padding-bottom: 10px;
+        }
+
+        .lista-novedades .novedad-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #FCD116;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255,255,255,0.1);
+            color: #FCD116;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 10px;
+            font-size: 0.85em;
+        }
+
+        .footer strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        /* Login overlay */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(240, 244, 255, 0.95);
+            background: rgba(0, 82, 54, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: opacity 0.3s;
-            flex-direction: column;
         }
+
         .modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-width: 300px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 400px;
             width: 90%;
+            border-top: 5px solid #FCD116;
+        }
+
+        .modal-content h2 {
+            color: #005236;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1.1em;
             text-align: center;
         }
-        .modal-content input {
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
+
         .modal-message {
-            color: red;
+            color: #dc3545;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .modal-message.success {
+            color: #28a745;
+        }
+
+        /* Historial */
+        .historial {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .historial h4 {
+            color: #005236;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .historial-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #FCD116;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .historial-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .historial-item .fecha {
+            font-weight: bold;
+            color: #005236;
+            margin-bottom: 5px;
+        }
+
+        .historial-item .datos {
             font-size: 0.9em;
-            margin-top: 5px;
+            color: #666;
         }
 
-        /* Ocultar modales por defecto */
-        #master-key-modal, #config-pin-modal {
-            display: none;
-            background: rgba(0,0,0,0.5);
-        }
-        #login-overlay {
-            display: flex;
-        }
-        
-        /* Contenedor de la app con el botón de salir */
-        #app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.2em;
+            }
+            
+            .fila {
+                grid-template-columns: 1fr 1fr 80px;
+            }
 
-
-        @media (min-width: 600px) {
-            body { width: 420px; margin: auto; }
-            .modal-overlay { width: 420px; margin: 0 auto; left: 50%; transform: translateX(-50%); }
+            .header::before,
+            .header::after {
+                font-size: 25px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Login Overlay -->
     <div id="login-overlay" class="modal-overlay">
-        <div id="login-content" class="modal-content">
-            <h2>Acceso a Parte de Compañía</h2>
-            <p>Ingresa el PIN de acceso:</p>
-            <input type="password" id="pin-input" placeholder="PIN" maxlength="4" />
-            <button id="btn-login">Ingresar</button>
+        <div class="modal-content">
+            <h2>🛡️ Acceso Seguro</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 15px;">
+                Ingrese su PIN de acceso
+            </p>
+            <input type="password" id="pin-input" placeholder="PIN (4 dígitos)" maxlength="4" />
+            <button id="btn-login" class="btn-primary" style="width: 100%; margin-top: 10px;">Ingresar</button>
             <p id="login-message" class="modal-message"></p>
-            <button id="btn-show-master-key" class="warning" style="margin-top: 10px; flex: initial; font-size: 15px;">Cambiar PIN de Acceso</button>
-            <p style="font-size: 0.8em; color: #888; margin-top: 10px;">
-                PIN actual (o por defecto): <span id="current-pin-display">Cargando...</span>
+            <button id="btn-show-master-key" class="btn-warning" style="width: 100%; margin-top: 15px; font-size: 0.9em;">
+                Cambiar PIN
+            </button>
+            <p style="font-size: 0.85em; color: #888; margin-top: 15px; text-align: center;">
+                PIN actual: <span id="current-pin-display" style="font-weight: bold;">****</span>
             </p>
         </div>
     </div>
-    <div id="master-key-modal" class="modal-overlay">
-        <div id="master-key-content" class="modal-content">
-            <h3>Clave Maestra de Configuración</h3>
-            <p>Ingresa la clave para modificar el PIN de acceso:</p>
+
+    <!-- Master Key Modal -->
+    <div id="master-key-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>🔐 Clave Maestra</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 15px;">
+                Ingrese la clave maestra para modificar el PIN
+            </p>
             <input type="password" id="master-key-input" placeholder="Clave Maestra" maxlength="4" />
-            <button id="btn-check-master-key">Verificar</button>
-            <button class="secondary" id="btn-close-master-key-modal">Cancelar</button>
+            <button id="btn-check-master-key" class="btn-primary" style="width: 100%; margin-top: 10px;">Verificar</button>
+            <button class="btn-danger" id="btn-close-master-key-modal" style="width: 100%; margin-top: 10px;">Cancelar</button>
             <p id="master-key-message" class="modal-message"></p>
         </div>
     </div>
-    <div id="config-pin-modal" class="modal-overlay">
-        <div id="config-pin-content" class="modal-content">
-            <h3>Establecer Nuevo PIN de Acceso</h3>
+
+    <!-- Config PIN Modal -->
+    <div id="config-pin-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>🔑 Nuevo PIN</h2>
             <input type="password" id="new-pin-input" placeholder="Nuevo PIN (4 dígitos)" maxlength="4" />
-            <input type="password" id="confirm-pin-input" placeholder="Confirmar Nuevo PIN" maxlength="4" />
-            <button id="btn-change-pin">Guardar Nuevo PIN</button>
-            <button class="secondary" id="btn-close-pin-modal">Cancelar</button>
+            <input type="password" id="confirm-pin-input" placeholder="Confirmar PIN" maxlength="4" />
+            <button id="btn-change-pin" class="btn-success" style="width: 100%; margin-top: 10px;">Guardar PIN</button>
+            <button class="btn-danger" id="btn-close-pin-modal" style="width: 100%; margin-top: 10px;">Cancelar</button>
             <p id="pin-config-message" class="modal-message"></p>
-            <p id="pin-update-note" style="font-size: 0.8em; color: #dc3545; margin-top: 10px;">
-                ⚠️ Recuerda actualizar el PIN en el código fuente (HTML) para que sea el valor por defecto si borras la memoria del navegador.
+        </div>
+    </div>
+
+    <!-- Modal de Detalles de Novedades -->
+    <div id="modal-detalle-novedades" class="modal-overlay" style="display: none;">
+        <div class="modal-content modal-novedades">
+            <h2>📝 Detalle de Novedades</h2>
+            <p style="color: #666; font-size: 0.9em; text-align: center; margin-bottom: 10px;">
+                <strong id="seccion-actual-titulo"></strong>
             </p>
+            
+            <div class="sugerencias-novedades">
+                <span class="titulo-sugerencias">💡 Tipos comunes (clic para agregar):</span><br>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Permiso médico')">🏥 Permiso médico</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Hospital')">🏥 Hospital</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Banda Musical')">🎵 Banda Musical</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Baño')">🚿 Baño</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Permiso Personal')">👤 Permiso Personal</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Incapacidad')">🤕 Incapacidad</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Alojamiento')">🛏️ Alojamiento</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Aseo Alojamiento')">🧹 Aseo Alojamiento</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Aseo Baños')">🧼 Aseo Baños</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Botando Basura')">🗑️ Botando Basura</span>
+                <span class="chip-sugerencia" onclick="agregarSugerencia('Orquesta')">🎺 Orquesta</span>
+            </div>
+
+            <textarea id="textarea-novedades" placeholder="Escriba aquí los detalles de las novedades...&#10;Ejemplo:&#10;- Pat. Juan Pérez: Permiso médico&#10;- Pat. María López: Comisión externa&#10;- Pat. Carlos Ruiz: Vacaciones"></textarea>
+            <div class="contador-caracteres">
+                <span id="contador-chars">0</span> / 500 caracteres
+            </div>
+
+            <button id="btn-guardar-novedades" class="btn-success" style="width: 100%; margin-top: 10px;">💾 Guardar Detalles</button>
+            <button id="btn-cerrar-novedades" class="btn-danger" style="width: 100%; margin-top: 10px;">❌ Cancelar</button>
         </div>
     </div>
+
+    <!-- App Content -->
     <div id="app-content" style="display: none;">
-        
-        <div id="app-header">
-            <h1>Parte de Compañía "Simón Bolívar"</h1>
-            <button id="btn-logout" class="logout">Salir</button>
+        <div class="container">
+            <div class="header">
+                <h1>🇨🇴 Policía Nacional de Colombia</h1>
+                <div class="subtitle">Parte de Compañía "Simón Bolívar"</div>
+            </div>
+
+            <div class="info-panel">
+                <div class="info-field">
+                    <label>📅 Fecha</label>
+                    <input type="date" id="fecha-parte" />
+                </div>
+                <div class="info-field">
+                    <label>⏰ Hora</label>
+                    <input type="time" id="hora-parte" />
+                </div>
+                <div class="info-field">
+                    <label>👤 Oficial a Cargo</label>
+                    <input type="text" id="oficial-cargo" placeholder="Nombre completo" />
+                </div>
+            </div>
+
+            <div id="secciones" style="margin-top: 20px;"></div>
+
+            <div class="botones-principales">
+                <button class="btn-primary" id="btnCalcular">📊 Calcular</button>
+                <button class="btn-success" id="btnGuardar">💾 Guardar</button>
+                <button class="btn-success" id="btnExportar">📄 Exportar</button>
+                <button class="btn-warning" id="btnLimpiar">🧹 Limpiar</button>
+                <button class="btn-danger" id="btnHistorial">📋 Historial</button>
+                <button class="btn-danger" id="btn-logout">🚪 Salir</button>
+            </div>
+
+            <div class="resumen" id="resultado">
+                <h3>📈 Resumen General</h3>
+                <div class="resumen-grid">
+                    <div class="resumen-item">
+                        <div class="label">Fuerza Efectiva</div>
+                        <div class="value" id="total-efectiva">-</div>
+                    </div>
+                    <div class="resumen-item">
+                        <div class="label">Fuerza Disponible</div>
+                        <div class="value" id="total-disponible">-</div>
+                    </div>
+                    <div class="resumen-item">
+                        <div class="label">Novedades</div>
+                        <div class="value" id="total-novedades">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lista-novedades">
+                <h4>📝 Detalle de Novedades por Sección</h4>
+                <div id="detalleNovedades">
+                    <em style="color: #999;">No hay datos para mostrar</em>
+                </div>
+            </div>
+
+            <div id="historial-section" class="historial" style="display: none;">
+                <h4>📚 Historial de Partes</h4>
+                <div id="historial-lista"></div>
+            </div>
+
+            <div class="footer">
+                <strong>Policía Nacional de Colombia</strong>
+                Dios y Patria • Código desarrollado por Carlos Alberto Vera<br>
+                Escuela de Policía Gabriel González López<br>
+                © 2025 - Todos los derechos reservados
+            </div>
         </div>
-
-        <div id="secciones"></div>
-
-        <div class="botones-principales">
-            <button id="btnCalcular">Calcular Totales</button>
-            <button class="secondary" id="btnExportar">Exportar Parte</button>
-            <button id="btnLimpiar" class="warning" title="Limpiar todos los datos ingresados">🧹 Limpiar</button>
-        </div>
-
-        <div class="resumen" id="resultado">
-            <p>Fuerza Efectiva Total: -</p>
-            <p>Fuerza Disponible Total: -</p>
-            <p>Novedades Totales: -</p>
-        </div>
-
-        <div class="lista-novedades" id="detalleNovedades"></div>
-    </div>
-
-    <div class="footer">
-        <p>
-            Código desarrollado por: Carlos Alberto Vera
-            <br>
-            Escuela de Policia Gabriel Gonzalez Lopez
-            <br>
-            &copy; 2025. Todos los derechos reservados.
-        </p>
     </div>
 
     <script>
-        // --- 0. LÓGICA DE LOGIN, SEGURIDAD Y TEMPORIZADOR ---
-
+        // Constantes de seguridad
         const PIN_STORAGE_KEY = 'parte_pin_hash';
-        // PIN de ACCESO inicial por defecto (si no hay uno guardado en localStorage)
         const DEFAULT_ACCESS_PIN = '1234';
-        // CLAVE MAESTRA de CONFIGURACIÓN (fija en el código): 9826
         const MASTER_KEY = '9826';
-        // TIEMPO DE INACTIVIDAD (en milisegundos): 30 minutos * 60 segundos * 1000 ms
         const INACTIVITY_TIMEOUT = 30 * 60 * 1000;
+        const NUM_SECCIONES = 5;
 
         let activityTimer;
+        const ordenDeLlenado = new Set();
+        const detallesNovedades = {}; // Almacena los detalles de novedades por sección
+        let seccionActualEditando = null;
 
-        // Hashing simple para ofuscar el PIN en localStorage
+        // Funciones de seguridad
         function hash(pin) {
-            return btoa(pin + 'carlos');
+            return btoa(pin + 'carlos_policia_nacional');
         }
 
         function getStoredPinHash() {
             return localStorage.getItem(PIN_STORAGE_KEY) || hash(DEFAULT_ACCESS_PIN);
         }
 
-        // --- Manejo del Temporizador de Inactividad ---
         function resetTimer() {
             clearTimeout(activityTimer);
             activityTimer = setTimeout(logout, INACTIVITY_TIMEOUT);
         }
 
         function setupActivityListeners() {
-            // Reinicia el temporizador con cualquier actividad en el documento
-            document.addEventListener('mousemove', resetTimer);
-            document.addEventListener('keypress', resetTimer);
-            document.addEventListener('touchstart', resetTimer);
-            document.addEventListener('scroll', resetTimer);
-            // También al interactuar con los inputs
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => input.addEventListener('input', resetTimer));
+            ['mousemove', 'keypress', 'touchstart', 'scroll'].forEach(event => {
+                document.addEventListener(event, resetTimer);
+            });
         }
 
         function logout() {
             clearTimeout(activityTimer);
             localStorage.removeItem('parte_authenticated_hash');
-            // Muestra el PIN actual para el usuario antes de desloguearse (para recordar)
-            displayCurrentPin();
             document.getElementById('app-content').style.display = 'none';
             document.getElementById('login-overlay').style.display = 'flex';
-            alert("Sesión cerrada automáticamente por inactividad (30 minutos).");
+            alert("⚠️ Sesión cerrada por inactividad (30 minutos)");
         }
 
         function checkAuthentication() {
@@ -316,27 +736,21 @@
         function showApp() {
             document.getElementById('login-overlay').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            resetTimer(); // Inicia el temporizador de inactividad
-            calcularParte(); // Inicializar la app
+            resetTimer();
+            cargarDatosGuardados();
+            calcularParte();
         }
 
-        // Muestra el PIN que el usuario debe usar
         function displayCurrentPin() {
             const currentHash = getStoredPinHash();
             const pinDisplay = document.getElementById('current-pin-display');
-
-            // Si el PIN es el valor por defecto, lo mostramos
             if (currentHash === hash(DEFAULT_ACCESS_PIN)) {
-                pinDisplay.textContent = `${DEFAULT_ACCESS_PIN} (por defecto)`;
+                pinDisplay.textContent = DEFAULT_ACCESS_PIN;
             } else {
-                // Si el PIN ha sido cambiado (y está en localStorage), no podemos mostrar el valor real
-                // Mostramos un mensaje que indica que se cambió localmente.
-                pinDisplay.textContent = 'Guardado en el navegador (no es el valor por defecto)';
+                pinDisplay.textContent = '****';
             }
         }
 
-
-        // --- Manejo del Login de Acceso (PIN de 4 dígitos) ---
         function handleLogin() {
             const pinInput = document.getElementById('pin-input');
             const messageDiv = document.getElementById('login-message');
@@ -345,7 +759,7 @@
             messageDiv.textContent = '';
 
             if (pin.length !== 4) {
-                messageDiv.textContent = 'El PIN de acceso debe ser de 4 dígitos.';
+                messageDiv.textContent = '❌ El PIN debe ser de 4 dígitos';
                 return;
             }
 
@@ -357,13 +771,12 @@
                 pinInput.value = '';
                 showApp();
             } else {
-                messageDiv.textContent = 'PIN de acceso incorrecto.';
+                messageDiv.textContent = '❌ PIN incorrecto';
                 pinInput.classList.add('invalido');
                 setTimeout(() => pinInput.classList.remove('invalido'), 1000);
             }
         }
 
-        // --- Manejo de la Clave Maestra de Configuración ---
         function checkMasterKey() {
             const masterKeyInput = document.getElementById('master-key-input');
             const messageDiv = document.getElementById('master-key-message');
@@ -376,13 +789,12 @@
                 document.getElementById('master-key-modal').style.display = 'none';
                 document.getElementById('config-pin-modal').style.display = 'flex';
             } else {
-                messageDiv.textContent = 'Clave Maestra incorrecta. Acceso denegado.';
+                messageDiv.textContent = '❌ Clave maestra incorrecta';
                 masterKeyInput.classList.add('invalido');
                 setTimeout(() => masterKeyInput.classList.remove('invalido'), 1000);
             }
         }
 
-        // --- Manejo del Cambio de PIN de Acceso ---
         function changeAccessPin() {
             const newPinInput = document.getElementById('new-pin-input');
             const confirmPinInput = document.getElementById('confirm-pin-input');
@@ -391,14 +803,15 @@
             const newPin = newPinInput.value;
             const confirmPin = confirmPinInput.value;
             messageDiv.textContent = '';
+            messageDiv.className = 'modal-message';
 
             if (newPin.length !== 4 || isNaN(newPin)) {
-                messageDiv.textContent = 'El nuevo PIN debe ser un número de 4 dígitos.';
+                messageDiv.textContent = '❌ El PIN debe ser 4 dígitos numéricos';
                 return;
             }
 
             if (newPin !== confirmPin) {
-                messageDiv.textContent = 'Los PINs no coinciden.';
+                messageDiv.textContent = '❌ Los PINs no coinciden';
                 return;
             }
 
@@ -406,18 +819,483 @@
             localStorage.setItem(PIN_STORAGE_KEY, newPinHash);
             localStorage.setItem('parte_authenticated_hash', newPinHash);
 
-            messageDiv.style.color = 'green';
-            messageDiv.textContent = '¡PIN de acceso cambiado y guardado exitosamente en el navegador!';
+            messageDiv.className = 'modal-message success';
+            messageDiv.textContent = '✅ PIN cambiado exitosamente';
 
-            // Actualizar la visualización del PIN actual en el login
             displayCurrentPin();
 
             setTimeout(() => {
                 document.getElementById('config-pin-modal').style.display = 'none';
-                messageDiv.style.color = 'red';
                 newPinInput.value = '';
                 confirmPinInput.value = '';
-            }, 2500); // 2.5 segundos para que se pueda leer la nota
+            }, 2000);
+        }
+
+        // Funciones de la aplicación
+        function crearSecciones() {
+            const contenedor = document.getElementById('secciones');
+            const htmlSecciones = [];
+            for (let i = 1; i <= NUM_SECCIONES; i++) {
+                htmlSecciones.push(`
+                    <div class="seccion">
+                        <h3>${i}ª Sección</h3>
+                        <div class="fila">
+                            <div class="campo-grupo">
+                                <label>Efectiva</label>
+                                <input type="number" id="efectiva${i}" min="0" max="999" />
+                            </div>
+                            <div class="campo-grupo">
+                                <label>Disponible</label>
+                                <input type="number" id="disponible${i}" min="0" max="999" />
+                            </div>
+                            <div class="campo-grupo">
+                                <label>Novedades</label>
+                                <div class="novedades-container">
+                                    <input type="number" id="novedades${i}" readonly />
+                                    <button class="btn-detalle-nov" id="btn-detalle${i}" title="Detalles de novedades" onclick="abrirDetalleNovedades(${i})">
+                                        ✏️
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            }
+            contenedor.innerHTML = htmlSecciones.join('');
+        }
+
+        function getDatosSeccion(i) {
+            const efInput = document.getElementById(`efectiva${i}`);
+            const dispInput = document.getElementById(`disponible${i}`);
+            const novInput = document.getElementById(`novedades${i}`);
+
+            let e = parseInt(efInput.value) || 0;
+            let d = parseInt(dispInput.value) || 0;
+
+            if (e > 0) {
+                efInput.value = e;
+            } else if (efInput.value.length > 0) {
+                efInput.value = '';
+            }
+
+            if (d > 0) {
+                dispInput.value = d;
+            } else if (dispInput.value.length > 0) {
+                dispInput.value = '';
+            }
+
+            if (e < 0) e = 0;
+            if (d < 0) d = 0;
+
+            dispInput.classList.remove('invalido');
+
+            if (d > e) {
+                d = e;
+                dispInput.classList.add('invalido');
+                setTimeout(() => {
+                    dispInput.classList.remove('invalido');
+                }, 1500);
+                if (d !== parseInt(dispInput.value)) {
+                    dispInput.value = d > 0 ? d : '';
+                }
+            }
+
+            const n = Math.max(0, e - d);
+            novInput.value = n;
+
+            return { e, d, n };
+        }
+
+        function actualizarLlenado(i) {
+            const { e, d } = getDatosSeccion(i);
+
+            if (e > 0 || d > 0) {
+                ordenDeLlenado.delete(i);
+                ordenDeLlenado.add(i);
+            } else {
+                ordenDeLlenado.delete(i);
+            }
+            calcularParte();
+        }
+
+        function recolectarYCalcularTotales() {
+            let totalEfectiva = 0;
+            let totalDisponible = 0;
+            let totalNovedades = 0;
+            const datosSecciones = [];
+
+            for (let i = 1; i <= NUM_SECCIONES; i++) {
+                const datosSeccion = getDatosSeccion(i);
+                datosSecciones.push(datosSeccion);
+                totalEfectiva += datosSeccion.e;
+                totalDisponible += datosSeccion.d;
+                totalNovedades += datosSeccion.n;
+            }
+
+            const listOrdenada = [];
+            Array.from(ordenDeLlenado).forEach(i => {
+                if (i >= 1 && i <= NUM_SECCIONES) {
+                    const datos = datosSecciones[i - 1];
+                    listOrdenada.push({
+                        seccion: i,
+                        novedades: datos.n,
+                        efectiva: datos.e,
+                        disponible: datos.d
+                    });
+                }
+            });
+
+            return {
+                totales: { totalEfectiva, totalDisponible, totalNovedades },
+                secciones: datosSecciones,
+                listOrdenada: listOrdenada
+            };
+        }
+
+        function calcularParte() {
+            const datos = recolectarYCalcularTotales();
+
+            document.getElementById('total-efectiva').textContent = datos.totales.totalEfectiva;
+            document.getElementById('total-disponible').textContent = datos.totales.totalDisponible;
+            document.getElementById('total-novedades').textContent = datos.totales.totalNovedades;
+
+            const detalleDiv = document.getElementById('detalleNovedades');
+            if (datos.listOrdenada.length === 0) {
+                detalleDiv.innerHTML = '<em style="color: #999;">No hay datos para mostrar</em>';
+            } else {
+                detalleDiv.innerHTML = datos.listOrdenada.map(s => {
+                    const textoNov = s.novedades > 0 ? `${s.novedades} novedades` : 'Sin novedad';
+                    const detalle = detallesNovedades[s.seccion] || '';
+                    const iconoDetalle = detalle ? ' 📋' : '';
+                    return `
+                        <div class="novedad-item">
+                            ${s.seccion}ª Sección → ${textoNov}${iconoDetalle}
+                            ${detalle ? `<div style="margin-top: 5px; padding-left: 15px; font-size: 0.9em; color: #666; white-space: pre-line;">${detalle}</div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Actualizar indicadores visuales de los botones
+            for (let i = 1; i <= NUM_SECCIONES; i++) {
+                const btn = document.getElementById(`btn-detalle${i}`);
+                const novInput = document.getElementById(`novedades${i}`);
+                const novedades = parseInt(novInput.value) || 0;
+                
+                if (btn) {
+                    // Deshabilitar botón si no hay novedades
+                    if (novedades === 0) {
+                        btn.disabled = true;
+                        btn.classList.remove('tiene-datos');
+                        btn.title = 'No hay novedades en esta sección';
+                    } else {
+                        btn.disabled = false;
+                        if (detallesNovedades[i]) {
+                            btn.classList.add('tiene-datos');
+                            btn.title = 'Ver/editar detalles (tiene información guardada)';
+                        } else {
+                            btn.classList.remove('tiene-datos');
+                            btn.title = 'Agregar detalles de novedades';
+                        }
+                    }
+                }
+            }
+        }
+
+        // Funciones para el modal de detalles de novedades
+        function abrirDetalleNovedades(seccion) {
+            seccionActualEditando = seccion;
+            const modal = document.getElementById('modal-detalle-novedades');
+            const textarea = document.getElementById('textarea-novedades');
+            const titulo = document.getElementById('seccion-actual-titulo');
+            
+            titulo.textContent = `${seccion}ª Sección`;
+            textarea.value = detallesNovedades[seccion] || '';
+            actualizarContador();
+            
+            modal.style.display = 'flex';
+            setTimeout(() => textarea.focus(), 100);
+        }
+
+        function cerrarModalNovedades() {
+            document.getElementById('modal-detalle-novedades').style.display = 'none';
+            seccionActualEditando = null;
+        }
+
+        function guardarDetalleNovedades() {
+            if (seccionActualEditando === null) return;
+            
+            const textarea = document.getElementById('textarea-novedades');
+            const detalle = textarea.value.trim();
+            
+            if (detalle) {
+                detallesNovedades[seccionActualEditando] = detalle;
+            } else {
+                delete detallesNovedades[seccionActualEditando];
+            }
+            
+            cerrarModalNovedades();
+            calcularParte();
+        }
+
+        function agregarSugerencia(texto) {
+            const textarea = document.getElementById('textarea-novedades');
+            const valorActual = textarea.value.trim();
+            
+            if (valorActual) {
+                textarea.value = valorActual + '\n- ' + texto;
+            } else {
+                textarea.value = '- ' + texto;
+            }
+            
+            actualizarContador();
+            textarea.focus();
+        }
+
+        function actualizarContador() {
+            const textarea = document.getElementById('textarea-novedades');
+            const contador = document.getElementById('contador-chars');
+            const longitud = textarea.value.length;
+            
+            contador.textContent = longitud;
+            
+            if (longitud > 500) {
+                contador.style.color = '#dc3545';
+                textarea.value = textarea.value.substring(0, 500);
+            } else if (longitud > 450) {
+                contador.style.color = '#ffc107';
+            } else {
+                contador.style.color = '#666';
+            }
+        }
+
+        function exportarParte() {
+            const datos = recolectarYCalcularTotales();
+            const fecha = document.getElementById('fecha-parte').value || new Date().toLocaleDateString();
+            const hora = document.getElementById('hora-parte').value || new Date().toLocaleTimeString();
+            const oficial = document.getElementById('oficial-cargo').value || 'No especificado';
+
+            let texto = `═══════════════════════════════════════════════════════\n`;
+            texto += `        POLICÍA NACIONAL DE COLOMBIA\n`;
+            texto += `      PARTE DE COMPAÑÍA "SIMÓN BOLÍVAR"\n`;
+            texto += `═══════════════════════════════════════════════════════\n\n`;
+            texto += `Fecha: ${fecha}\n`;
+            texto += `Hora: ${hora}\n`;
+            texto += `Oficial a Cargo: ${oficial}\n\n`;
+            texto += `───────────────────────────────────────────────────────\n`;
+            texto += `DETALLE POR SECCIONES\n`;
+            texto += `───────────────────────────────────────────────────────\n\n`;
+
+            datos.listOrdenada.forEach((s) => {
+                texto += `${s.seccion}ª Sección\n`;
+                texto += `  • Efectiva: ${s.efectiva}\n`;
+                texto += `  • Disponible: ${s.disponible}\n`;
+                texto += `  • Novedades: ${s.novedades}\n`;
+                
+                // Agregar detalles de novedades si existen
+                if (detallesNovedades[s.seccion]) {
+                    texto += `  • Detalles:\n`;
+                    const lineas = detallesNovedades[s.seccion].split('\n');
+                    lineas.forEach(linea => {
+                        if (linea.trim()) {
+                            texto += `    ${linea}\n`;
+                        }
+                    });
+                }
+                texto += `\n`;
+            });
+
+            if (datos.listOrdenada.length === 0) {
+                texto += `(No se ingresaron datos)\n\n`;
+            }
+
+            texto += `═══════════════════════════════════════════════════════\n`;
+            texto += `TOTALES GENERALES\n`;
+            texto += `═══════════════════════════════════════════════════════\n`;
+            texto += `Fuerza Efectiva Total: ${datos.totales.totalEfectiva}\n`;
+            texto += `Fuerza Disponible Total: ${datos.totales.totalDisponible}\n`;
+            texto += `Novedades Totales: ${datos.totales.totalNovedades}\n\n`;
+
+            texto += `───────────────────────────────────────────────────────\n`;
+            texto += `ORDEN DE PARTE\n`;
+            texto += `───────────────────────────────────────────────────────\n`;
+            const listaTexto = datos.listOrdenada.map(s => {
+                const textoNov = s.novedades > 0 ? `(${s.novedades} nov.)` : `(Sin novedad)`;
+                return `${s.seccion}ª Secc. ${textoNov}`;
+            });
+            texto += listaTexto.join(' → ') + '\n\n';
+
+            texto += `═══════════════════════════════════════════════════════\n`;
+            texto += `Policía Nacional de Colombia - "Dios y Patria"\n`;
+            texto += `Código desarrollado por: Carlos Alberto Vera\n`;
+            texto += `Escuela de Policía Gabriel González López\n`;
+            texto += `═══════════════════════════════════════════════════════\n`;
+
+            const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
+            const enlace = document.createElement("a");
+            enlace.href = URL.createObjectURL(blob);
+            enlace.download = `parte_compania_${fecha.replace(/\//g, '-')}.txt`;
+            enlace.click();
+            URL.revokeObjectURL(enlace.href);
+        }
+
+        function limpiarTodo() {
+            if (confirm('⚠️ ¿Está seguro de limpiar todos los datos? Esta acción no se puede deshacer.')) {
+                for (let i = 1; i <= NUM_SECCIONES; i++) {
+                    document.getElementById(`efectiva${i}`).value = '';
+                    document.getElementById(`disponible${i}`).value = '';
+                    document.getElementById(`novedades${i}`).value = '0';
+                }
+                document.getElementById('fecha-parte').value = '';
+                document.getElementById('hora-parte').value = '';
+                document.getElementById('oficial-cargo').value = '';
+                ordenDeLlenado.clear();
+                
+                // Limpiar detalles de novedades
+                for (let key in detallesNovedades) {
+                    delete detallesNovedades[key];
+                }
+                
+                calcularParte();
+                alert('✅ Todos los campos han sido limpiados');
+            }
+        }
+
+        function guardarParte() {
+            const datos = recolectarYCalcularTotales();
+            const fecha = document.getElementById('fecha-parte').value;
+            const hora = document.getElementById('hora-parte').value;
+            const oficial = document.getElementById('oficial-cargo').value;
+
+            if (!fecha || !hora || !oficial) {
+                alert('⚠️ Por favor complete fecha, hora y oficial a cargo antes de guardar');
+                return;
+            }
+
+            if (datos.totales.totalEfectiva === 0) {
+                alert('⚠️ No hay datos para guardar');
+                return;
+            }
+
+            const parte = {
+                id: Date.now(),
+                fecha: fecha,
+                hora: hora,
+                oficial: oficial,
+                datos: datos,
+                detallesNovedades: {...detallesNovedades}, // Guardar los detalles
+                timestamp: new Date().toISOString()
+            };
+
+            let historial = JSON.parse(localStorage.getItem('historial_partes') || '[]');
+            historial.unshift(parte);
+            
+            // Mantener solo los últimos 50 partes
+            if (historial.length > 50) {
+                historial = historial.slice(0, 50);
+            }
+
+            localStorage.setItem('historial_partes', JSON.stringify(historial));
+            alert('✅ Parte guardado exitosamente');
+        }
+
+        function mostrarHistorial() {
+            const historialSection = document.getElementById('historial-section');
+            const historialLista = document.getElementById('historial-lista');
+            
+            const historial = JSON.parse(localStorage.getItem('historial_partes') || '[]');
+
+            if (historial.length === 0) {
+                alert('📋 No hay partes guardados en el historial');
+                return;
+            }
+
+            historialLista.innerHTML = historial.map(parte => `
+                <div class="historial-item" onclick="cargarParte(${parte.id})">
+                    <div class="fecha">📅 ${parte.fecha} - ⏰ ${parte.hora}</div>
+                    <div class="datos">
+                        👤 ${parte.oficial}<br>
+                        📊 Efectiva: ${parte.datos.totales.totalEfectiva} | 
+                        Disponible: ${parte.datos.totales.totalDisponible} | 
+                        Novedades: ${parte.datos.totales.totalNovedades}
+                    </div>
+                </div>
+            `).join('');
+
+            historialSection.style.display = 'block';
+            historialSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cargarParte(id) {
+            const historial = JSON.parse(localStorage.getItem('historial_partes') || '[]');
+            const parte = historial.find(p => p.id === id);
+
+            if (!parte) {
+                alert('❌ No se pudo cargar el parte');
+                return;
+            }
+
+            if (!confirm('⚠️ ¿Cargar este parte? Se perderán los datos actuales no guardados.')) {
+                return;
+            }
+
+            document.getElementById('fecha-parte').value = parte.fecha;
+            document.getElementById('hora-parte').value = parte.hora;
+            document.getElementById('oficial-cargo').value = parte.oficial;
+
+            ordenDeLlenado.clear();
+            
+            // Limpiar y cargar detalles de novedades
+            for (let key in detallesNovedades) {
+                delete detallesNovedades[key];
+            }
+            if (parte.detallesNovedades) {
+                Object.assign(detallesNovedades, parte.detallesNovedades);
+            }
+            
+            parte.datos.secciones.forEach((seccion, i) => {
+                const idx = i + 1;
+                document.getElementById(`efectiva${idx}`).value = seccion.e > 0 ? seccion.e : '';
+                document.getElementById(`disponible${idx}`).value = seccion.d > 0 ? seccion.d : '';
+                
+                if (seccion.e > 0 || seccion.d > 0) {
+                    ordenDeLlenado.add(idx);
+                }
+            });
+
+            calcularParte();
+            document.getElementById('historial-section').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            alert('✅ Parte cargado exitosamente');
+        }
+
+        function cargarDatosGuardados() {
+            const ahora = new Date();
+            document.getElementById('fecha-parte').value = ahora.toISOString().split('T')[0];
+            document.getElementById('hora-parte').value = ahora.toTimeString().slice(0, 5);
+        }
+
+        function adjuntarListeners() {
+            document.getElementById('btnCalcular').addEventListener('click', calcularParte);
+            document.getElementById('btnExportar').addEventListener('click', exportarParte);
+            document.getElementById('btnLimpiar').addEventListener('click', limpiarTodo);
+            document.getElementById('btnGuardar').addEventListener('click', guardarParte);
+            document.getElementById('btnHistorial').addEventListener('click', mostrarHistorial);
+
+            // Listeners para el modal de detalles de novedades
+            document.getElementById('btn-guardar-novedades').addEventListener('click', guardarDetalleNovedades);
+            document.getElementById('btn-cerrar-novedades').addEventListener('click', cerrarModalNovedades);
+            document.getElementById('textarea-novedades').addEventListener('input', actualizarContador);
+
+            for (let i = 1; i <= NUM_SECCIONES; i++) {
+                const inputs = [
+                    document.getElementById(`efectiva${i}`),
+                    document.getElementById(`disponible${i}`)
+                ];
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => actualizarLlenado(i));
+                });
+            }
         }
 
         function setupSecurityListeners() {
@@ -426,10 +1304,8 @@
                 if (e.key === 'Enter') handleLogin();
             });
 
-            // Botón de Salir (Logout)
             document.getElementById('btn-logout').addEventListener('click', logout);
 
-            // Abrir Modal de Clave Maestra
             document.getElementById('btn-show-master-key').addEventListener('click', () => {
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('master-key-modal').style.display = 'flex';
@@ -437,281 +1313,38 @@
                 document.getElementById('master-key-input').focus();
             });
 
-            // Verificar Clave Maestra
             document.getElementById('btn-check-master-key').addEventListener('click', checkMasterKey);
             document.getElementById('master-key-input').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') checkMasterKey();
             });
 
-            // Cancelar Clave Maestra
             document.getElementById('btn-close-master-key-modal').addEventListener('click', () => {
                 document.getElementById('master-key-modal').style.display = 'none';
                 document.getElementById('login-overlay').style.display = 'flex';
             });
 
-            // Guardar Nuevo PIN
             document.getElementById('btn-change-pin').addEventListener('click', changeAccessPin);
 
-            // Cancelar Cambio de PIN
             document.getElementById('btn-close-pin-modal').addEventListener('click', () => {
                 document.getElementById('config-pin-modal').style.display = 'none';
-                // Volvemos al contenido de la aplicación si el usuario está logueado
                 if (checkAuthentication()) {
                     document.getElementById('app-content').style.display = 'block';
                 }
             });
         }
 
+        // Función global para cargar parte desde historial
+        window.cargarParte = cargarParte;
+        window.abrirDetalleNovedades = abrirDetalleNovedades;
+        window.agregarSugerencia = agregarSugerencia;
 
-        // Espera a que el DOM esté cargado para ejecutar el script
+        // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
-
-            const contenedor = document.getElementById('secciones');
-            const resultadoDiv = document.getElementById('resultado');
-            const detalleNovedadesDiv = document.getElementById('detalleNovedades');
-            const ordenDeLlenado = new Set(); 
-            const NUM_SECCIONES = 5;
-
-            // --- 1. CREACIÓN DEL DOM ---
-
-            function crearSecciones() {
-                const htmlSecciones = [];
-                for (let i = 1; i <= NUM_SECCIONES; i++) {
-                    htmlSecciones.push(`
-                        <div class="seccion" id="sec${i}">
-                            <h3>${i}ª Sección</h3>
-                            <div class="fila">
-                                <div class="campo-grupo">
-                                    <label for="efectiva${i}">Efec.</label>
-                                    <input type="number" id="efectiva${i}" min="0" max="999" />
-                                </div>
-                                <div class="campo-grupo">
-                                    <label for="disponible${i}">Disp.</label>
-                                    <input type="number" id="disponible${i}" min="0" max="999" />
-                                </div>
-                                <div class="campo-grupo nov">
-                                    <label for="novedades${i}">Nov.</label>
-                                    <input type="number" id="novedades${i}" readonly />
-                                </div>
-                            </div>
-                        </div>
-                    `);
-                }
-                contenedor.innerHTML = htmlSecciones.join('');
-            }
-
-            // --- 2. MANEJO DE EVENTOS ---
-
-            function adjuntarListeners() {
-                document.getElementById('btnCalcular').addEventListener('click', calcularParte);
-                document.getElementById('btnExportar').addEventListener('click', exportarParte);
-                // AJUSTE: Listener para el botón de Limpiar
-                document.getElementById('btnLimpiar').addEventListener('click', limpiarTodo); 
-
-                for (let i = 1; i <= NUM_SECCIONES; i++) {
-                    const inputs = [
-                        document.getElementById(`efectiva${i}`),
-                        document.getElementById(`disponible${i}`)
-                    ];
-                    inputs.forEach(input => {
-                        input.addEventListener('input', () => actualizarLlenado(i)); 
-                    });
-                }
-            }
-
-            // --- 3. LÓGICA DE NEGOCIO (AJUSTADA) ---
-
-            function getDatosSeccion(i) {
-                const efInput = document.getElementById(`efectiva${i}`);
-                const dispInput = document.getElementById(`disponible${i}`);
-                const novInput = document.getElementById(`novedades${i}`);
-
-                // 1. Obtener y Limpiar Ceros de Efectiva/Disponible
-                let e = parseInt(efInput.value) || 0;
-                let d = parseInt(dispInput.value) || 0;
-
-                // Si el valor numérico es 0 pero el usuario ingresó algo, limpiamos el input visualmente
-                if (e > 0) {
-                    efInput.value = e;
-                } else if (efInput.value.length > 0) { 
-                    efInput.value = ''; 
-                }
-                
-                if (d > 0) {
-                    dispInput.value = d;
-                } else if (dispInput.value.length > 0) {
-                    dispInput.value = ''; 
-                }
-
-                // 2. Validaciones (mínimos)
-                if (e < 0) e = 0;
-                if (d < 0) d = 0;
-
-                dispInput.classList.remove('invalido');
-
-                // 3. Validar Disponible no sea mayor a Efectiva
-                if (d > e) {
-                    d = e;
-                    dispInput.classList.add('invalido');
-                    setTimeout(() => {
-                        dispInput.classList.remove('invalido');
-                    }, 1500);
-                    // Actualizar el input con el valor corregido (si es necesario)
-                    if (d !== parseInt(dispInput.value)) {
-                       dispInput.value = d > 0 ? d : '';
-                    }
-                }
-                
-                // 4. Calcular Novedades
-                const n = Math.max(0, e - d);
-                // AJUSTE: Mantener el 0 si el resultado es 0.
-                novInput.value = n; 
-
-                return { e, d, n };
-            }
-
-            // Función para rastrear el orden de llenado
-            function actualizarLlenado(i) {
-                const { e, d } = getDatosSeccion(i); 
-                
-                if (e > 0 || d > 0) {
-                    // Mover la sección al final del orden (la más reciente)
-                    ordenDeLlenado.delete(i); 
-                    ordenDeLlenado.add(i);
-                } else {
-                    // Si ambos campos están vacíos o en 0, la removemos del orden
-                    ordenDeLlenado.delete(i);
-                }
-                // Volver a calcular para actualizar el resumen inmediatamente
-                calcularParte();
-            }
-
-
-            function recolectarYCalcularTotales() {
-                let totalEfectiva = 0;
-                let totalDisponible = 0;
-                let totalNovedades = 0;
-                const datosSecciones = [];
-
-                // Recolectar y calcular los datos de todas las secciones
-                for (let i = 1; i <= NUM_SECCIONES; i++) {
-                    // Llama a getDatosSeccion para limpiar los '0's de Efec/Disp y actualizar Novedades
-                    const datosSeccion = getDatosSeccion(i); 
-                    datosSecciones.push(datosSeccion);
-
-                    totalEfectiva += datosSeccion.e;
-                    totalDisponible += datosSeccion.d;
-                    totalNovedades += datosSeccion.n;
-                }
-
-                const listOrdenada = [];
-                
-                Array.from(ordenDeLlenado).forEach(i => {
-                    if (i >= 1 && i <= NUM_SECCIONES) { 
-                        const datos = datosSecciones[i - 1];
-                        listOrdenada.push({ 
-                            seccion: i, 
-                            novedades: datos.n,
-                            efectiva: datos.e,
-                            disponible: datos.d
-                        });
-                    }
-                });
-
-                return {
-                    totales: { totalEfectiva, totalDisponible, totalNovedades },
-                    secciones: datosSecciones,
-                    listOrdenada: listOrdenada 
-                };
-            }
-
-            // --- 4. FUNCIONES DE BOTONES (Cálculo, Exportación y Limpieza) ---
-
-            function calcularParte() {
-                const datos = recolectarYCalcularTotales();
-                
-                resultadoDiv.innerHTML = `
-                    <p>Compañía Simón Bolívar</p>
-                    <p>Fuerza Efectiva Total: ${datos.totales.totalEfectiva}</p>
-                    <p>Fuerza Disponible Total: ${datos.totales.totalDisponible}</p>
-                    <p>Novedades Totales: ${datos.totales.totalNovedades}</p>
-                `;
-
-                // Mostrar el orden de llenado completo
-                detalleNovedadesDiv.innerHTML = `<strong>Orden de Parte:</strong><br>` +
-                    (datos.listOrdenada.length === 0 
-                        ? '<em>No hay secciones completadas para el reporte.</em>' 
-                        : datos.listOrdenada
-                            .map(s => {
-                                const textoNov = s.novedades > 0 
-                                    ? `→ ${s.novedades} nov.` 
-                                    : `(Sin novedad)`;
-                                return `${s.seccion}ª Sección ${textoNov}`;
-                            }).join('<br>')
-                    );
-            }
-
-            function exportarParte() {
-                const datos = recolectarYCalcularTotales();
-
-                let texto = `Parte de Compañía 'Simón Bolívar' - ${new Date().toLocaleString()}\n\n`;
-
-                datos.listOrdenada.forEach((s) => {
-                    texto += `${s.seccion}ª Sección → Efectiva: ${s.efectiva}, Disponible: ${s.disponible}, Novedades: ${s.novedades}\n`;
-                });
-                
-                if (datos.listOrdenada.length === 0) {
-                     texto += `(No se ingresaron datos en ninguna sección para el reporte)\n`;
-                }
-                
-                texto += `\nTotales:\n`;
-                texto += `Fuerza Efectiva: ${datos.totales.totalEfectiva}\n`;
-                texto += `Fuerza Disponible: ${datos.totales.totalDisponible}\n`;
-                texto += `Novedades: ${datos.totales.totalNovedades}\n\n`;
-
-                texto += `Orden de Parte:\n`;
-                const listaTexto = datos.listOrdenada.map(s => {
-                    const textoNov = s.novedades > 0 ? `(${s.novedades} nov.)` : `(Sin novedad)`;
-                    return `${s.seccion}ª Secc. ${textoNov}`;
-                });
-                texto += listaTexto.join(' -> ') + '\n';
-
-                texto += `\n--- Autoría ---\n`;
-                texto += `Código desarrollado por: Carlos Vera\n`;
-                texto += `Escuela de Policia Gabriel Gonzalez Lopez\n`;
-
-
-                const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
-                const enlace = document.createElement("a");
-                enlace.href = URL.createObjectURL(blob);
-                enlace.download = `parte_compania_${new Date().toISOString().slice(0,10)}.txt`;
-                enlace.click();
-                URL.revokeObjectURL(enlace.href);
-            }
-            
-            // AJUSTE: Función para limpiar todos los campos
-            function limpiarTodo() {
-                if (confirm('¿Estás seguro de que deseas limpiar TODOS los datos de las secciones? Esta acción no se puede deshacer.')) {
-                    for (let i = 1; i <= NUM_SECCIONES; i++) {
-                        document.getElementById(`efectiva${i}`).value = '';
-                        document.getElementById(`disponible${i}`).value = '';
-                        document.getElementById(`novedades${i}`).value = '0'; // Se restablece a 0
-                    }
-                    ordenDeLlenado.clear(); // Limpia el orden de llenado
-                    calcularParte(); // Recalcula para limpiar el resumen
-                    alert('Todos los campos han sido limpiados.');
-                }
-            }
-
-
-            // --- 5. INICIALIZACIÓN ---
-
             crearSecciones();
             adjuntarListeners();
             setupSecurityListeners();
-            setupActivityListeners(); // Configura el temporizador
+            setupActivityListeners();
 
-            // Mostrar el login o la app al cargar
             displayCurrentPin();
             if (!checkAuthentication()) {
                 document.getElementById('login-overlay').style.display = 'flex';
