@@ -24,7 +24,6 @@
             margin: 0 auto;
         }
 
-        /* Header con escudo */
         .header {
             background: linear-gradient(to right, #FCD116, #f4c430);
             border-radius: 15px 15px 0 0;
@@ -34,25 +33,17 @@
             position: relative;
         }
 
-        .header::before {
+        .header::before, .header::after {
             content: '★';
             position: absolute;
-            left: 20px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 40px;
             color: #005236;
         }
 
-        .header::after {
-            content: '★';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            color: #005236;
-        }
+        .header::before { left: 20px; }
+        .header::after { right: 20px; }
 
         .header h1 {
             color: #005236;
@@ -69,7 +60,6 @@
             font-weight: 600;
         }
 
-        /* Panel de información */
         .info-panel {
             background: white;
             padding: 20px;
@@ -106,7 +96,6 @@
             box-shadow: 0 0 0 3px rgba(252, 209, 22, 0.2);
         }
 
-        /* Secciones */
         .seccion {
             background: white;
             padding: 15px;
@@ -170,7 +159,6 @@
             color: #005236;
         }
 
-        /* Contenedor de novedades con botón */
         .novedades-container {
             display: flex;
             align-items: center;
@@ -217,7 +205,6 @@
             50% { opacity: 0.7; }
         }
 
-        /* Modal de detalles de novedades */
         .modal-novedades {
             max-width: 500px;
         }
@@ -292,7 +279,6 @@
             75% { transform: translateX(5px); }
         }
 
-        /* Botones */
         .botones-principales {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -341,7 +327,12 @@
             transform: translateY(0);
         }
 
-        /* Resumen */
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .resumen {
             background: linear-gradient(135deg, #005236, #003d28);
             color: #FCD116;
@@ -383,7 +374,6 @@
             font-weight: bold;
         }
 
-        /* Lista de novedades */
         .lista-novedades {
             background: white;
             padding: 20px;
@@ -408,7 +398,6 @@
             border-radius: 5px;
         }
 
-        /* Footer */
         .footer {
             background: rgba(255,255,255,0.1);
             color: #FCD116;
@@ -425,7 +414,6 @@
             font-size: 1.1em;
         }
 
-        /* Login overlay */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -477,7 +465,6 @@
             color: #28a745;
         }
 
-        /* Historial */
         .historial {
             background: white;
             padding: 20px;
@@ -499,6 +486,7 @@
             border-left: 4px solid #FCD116;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
         }
 
         .historial-item:hover {
@@ -515,6 +503,48 @@
         .historial-item .datos {
             font-size: 0.9em;
             color: #666;
+        }
+
+        .btn-eliminar-parte {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .btn-eliminar-parte:hover {
+            background: #c82333;
+        }
+
+        .loading-indicator {
+            text-align: center;
+            color: #FCD116;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+
+        .sync-status {
+            background: rgba(255,255,255,0.1);
+            color: #FCD116;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        .sync-status.online {
+            background: rgba(40, 167, 69, 0.2);
+        }
+
+        .sync-status.offline {
+            background: rgba(220, 53, 69, 0.2);
         }
 
         @media (max-width: 600px) {
@@ -539,18 +569,23 @@
     <div id="login-overlay" class="modal-overlay">
         <div class="modal-content">
             <h2>🛡️ Acceso Seguro</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 15px;">
-                Ingrese su PIN de acceso
-            </p>
-            <input type="password" id="pin-input" placeholder="PIN (4 dígitos)" maxlength="4" />
-            <button id="btn-login" class="btn-primary" style="width: 100%; margin-top: 10px;">Ingresar</button>
-            <p id="login-message" class="modal-message"></p>
-            <button id="btn-show-master-key" class="btn-warning" style="width: 100%; margin-top: 15px; font-size: 0.9em;">
-                Cambiar PIN
-            </button>
-            <p style="font-size: 0.85em; color: #888; margin-top: 15px; text-align: center;">
-                PIN actual: <span id="current-pin-display" style="font-weight: bold;">****</span>
-            </p>
+            <div class="loading-indicator" id="firebase-loading">
+                🔄 Conectando con Firebase...
+            </div>
+            <div id="login-form" style="display: none;">
+                <p style="text-align: center; color: #666; margin-bottom: 15px;">
+                    Ingrese su PIN de acceso
+                </p>
+                <input type="password" id="pin-input" placeholder="PIN (4 dígitos)" maxlength="4" />
+                <button id="btn-login" class="btn-primary" style="width: 100%; margin-top: 10px;">Ingresar</button>
+                <p id="login-message" class="modal-message"></p>
+                <button id="btn-show-master-key" class="btn-warning" style="width: 100%; margin-top: 15px; font-size: 0.9em;">
+                    Cambiar PIN
+                </button>
+                <p style="font-size: 0.85em; color: #888; margin-top: 15px; text-align: center;">
+                    PIN actual: <span id="current-pin-display" style="font-weight: bold;">****</span>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -616,6 +651,10 @@
     <!-- App Content -->
     <div id="app-content" style="display: none;">
         <div class="container">
+            <div class="sync-status" id="sync-status">
+                🔄 Sincronizando...
+            </div>
+
             <div class="header">
                 <h1>🇨🇴 Policía Nacional de Colombia</h1>
                 <div class="subtitle">Parte de Compañía "Simón Bolívar"</div>
@@ -686,17 +725,39 @@
         </div>
     </div>
 
-    <script>
-        // Constantes de seguridad
-        const PIN_STORAGE_KEY = 'parte_pin_hash';
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCL7moRjdfRCDfCzqjtYvbRwoD0kZP3iRk",
+            authDomain: "parte-companias.firebaseapp.com",
+            projectId: "parte-companias",
+            storageBucket: "parte-companias.firebasestorage.app",
+            messagingSenderId: "85899401396",
+            appId: "1:85899401396:web:a0720222deab02b1c79fe1",
+            measurementId: "G-VLW91Y93JN"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Constantes
         const DEFAULT_ACCESS_PIN = '1234';
         const MASTER_KEY = '9826';
         const INACTIVITY_TIMEOUT = 30 * 60 * 1000;
         const NUM_SECCIONES = 5;
 
+        // Variables globales
+        let currentUser = null;
         let activityTimer;
+        let isAuthenticated = false;
         const ordenDeLlenado = new Set();
-        const detallesNovedades = {}; // Almacena los detalles de novedades por sección
+        const detallesNovedades = {};
         let seccionActualEditando = null;
 
         // Funciones de seguridad
@@ -704,8 +765,34 @@
             return btoa(pin + 'carlos_policia_nacional');
         }
 
-        function getStoredPinHash() {
-            return localStorage.getItem(PIN_STORAGE_KEY) || hash(DEFAULT_ACCESS_PIN);
+        async function getStoredPinHash() {
+            if (!currentUser) return hash(DEFAULT_ACCESS_PIN);
+            
+            try {
+                const configRef = doc(db, `usuarios/${currentUser.uid}/config/pin`);
+                const configDoc = await getDoc(configRef);
+                
+                if (configDoc.exists()) {
+                    return configDoc.data().pinHash;
+                }
+                return hash(DEFAULT_ACCESS_PIN);
+            } catch (error) {
+                console.error('Error obteniendo PIN:', error);
+                return hash(DEFAULT_ACCESS_PIN);
+            }
+        }
+
+        async function savePin(pinHash) {
+            if (!currentUser) return;
+            
+            try {
+                const configRef = doc(db, `usuarios/${currentUser.uid}/config/pin`);
+                await setDoc(configRef, { pinHash }, { merge: true });
+                updateSyncStatus('✅ PIN actualizado', 'online');
+            } catch (error) {
+                console.error('Error guardando PIN:', error);
+                updateSyncStatus('❌ Error actualizando PIN', 'offline');
+            }
         }
 
         function resetTimer() {
@@ -721,28 +808,21 @@
 
         function logout() {
             clearTimeout(activityTimer);
-            localStorage.removeItem('parte_authenticated_hash');
+            isAuthenticated = false;
             document.getElementById('app-content').style.display = 'none';
             document.getElementById('login-overlay').style.display = 'flex';
-            alert("⚠️ Sesión cerrada por inactividad (30 minutos)");
+            document.getElementById('login-form').style.display = 'block';
+            alert("⚠️ Sesión cerrada");
         }
 
-        function checkAuthentication() {
-            const storedAuthHash = localStorage.getItem('parte_authenticated_hash');
-            const requiredPinHash = getStoredPinHash();
-            return storedAuthHash === requiredPinHash;
+        function updateSyncStatus(message, status) {
+            const statusDiv = document.getElementById('sync-status');
+            statusDiv.textContent = message;
+            statusDiv.className = `sync-status ${status}`;
         }
 
-        function showApp() {
-            document.getElementById('login-overlay').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
-            resetTimer();
-            cargarDatosGuardados();
-            calcularParte();
-        }
-
-        function displayCurrentPin() {
-            const currentHash = getStoredPinHash();
+        async function displayCurrentPin() {
+            const currentHash = await getStoredPinHash();
             const pinDisplay = document.getElementById('current-pin-display');
             if (currentHash === hash(DEFAULT_ACCESS_PIN)) {
                 pinDisplay.textContent = DEFAULT_ACCESS_PIN;
@@ -751,7 +831,7 @@
             }
         }
 
-        function handleLogin() {
+        async function handleLogin() {
             const pinInput = document.getElementById('pin-input');
             const messageDiv = document.getElementById('login-message');
             const pin = pinInput.value;
@@ -764,10 +844,10 @@
             }
 
             const enteredHash = hash(pin);
-            const storedHash = getStoredPinHash();
+            const storedHash = await getStoredPinHash();
 
             if (enteredHash === storedHash) {
-                localStorage.setItem('parte_authenticated_hash', enteredHash);
+                isAuthenticated = true;
                 pinInput.value = '';
                 showApp();
             } else {
@@ -795,7 +875,7 @@
             }
         }
 
-        function changeAccessPin() {
+        async function changeAccessPin() {
             const newPinInput = document.getElementById('new-pin-input');
             const confirmPinInput = document.getElementById('confirm-pin-input');
             const messageDiv = document.getElementById('pin-config-message');
@@ -816,19 +896,30 @@
             }
 
             const newPinHash = hash(newPin);
-            localStorage.setItem(PIN_STORAGE_KEY, newPinHash);
-            localStorage.setItem('parte_authenticated_hash', newPinHash);
+            await savePin(newPinHash);
 
             messageDiv.className = 'modal-message success';
             messageDiv.textContent = '✅ PIN cambiado exitosamente';
 
-            displayCurrentPin();
+            await displayCurrentPin();
 
             setTimeout(() => {
                 document.getElementById('config-pin-modal').style.display = 'none';
                 newPinInput.value = '';
                 confirmPinInput.value = '';
+                if (isAuthenticated) {
+                    document.getElementById('app-content').style.display = 'block';
+                }
             }, 2000);
+        }
+
+        function showApp() {
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+            resetTimer();
+            cargarDatosGuardados();
+            calcularParte();
+            updateSyncStatus('✅ Conectado', 'online');
         }
 
         // Funciones de la aplicación
@@ -976,14 +1067,12 @@
                 }).join('');
             }
 
-            // Actualizar indicadores visuales de los botones
             for (let i = 1; i <= NUM_SECCIONES; i++) {
                 const btn = document.getElementById(`btn-detalle${i}`);
                 const novInput = document.getElementById(`novedades${i}`);
                 const novedades = parseInt(novInput.value) || 0;
                 
                 if (btn) {
-                    // Deshabilitar botón si no hay novedades
                     if (novedades === 0) {
                         btn.disabled = true;
                         btn.classList.remove('tiene-datos');
@@ -1002,7 +1091,6 @@
             }
         }
 
-        // Funciones para el modal de detalles de novedades
         function abrirDetalleNovedades(seccion) {
             seccionActualEditando = seccion;
             const modal = document.getElementById('modal-detalle-novedades');
@@ -1092,7 +1180,6 @@
                 texto += `  • Disponible: ${s.disponible}\n`;
                 texto += `  • Novedades: ${s.novedades}\n`;
                 
-                // Agregar detalles de novedades si existen
                 if (detallesNovedades[s.seccion]) {
                     texto += `  • Detalles:\n`;
                     const lineas = detallesNovedades[s.seccion].split('\n');
@@ -1151,7 +1238,6 @@
                 document.getElementById('oficial-cargo').value = '';
                 ordenDeLlenado.clear();
                 
-                // Limpiar detalles de novedades
                 for (let key in detallesNovedades) {
                     delete detallesNovedades[key];
                 }
@@ -1161,7 +1247,12 @@
             }
         }
 
-        function guardarParte() {
+        async function guardarParte() {
+            if (!currentUser) {
+                alert('❌ Error: No hay usuario autenticado');
+                return;
+            }
+
             const datos = recolectarYCalcularTotales();
             const fecha = document.getElementById('fecha-parte').value;
             const hora = document.getElementById('hora-parte').value;
@@ -1177,96 +1268,163 @@
                 return;
             }
 
-            const parte = {
-                id: Date.now(),
-                fecha: fecha,
-                hora: hora,
-                oficial: oficial,
-                datos: datos,
-                detallesNovedades: {...detallesNovedades}, // Guardar los detalles
-                timestamp: new Date().toISOString()
-            };
-
-            let historial = JSON.parse(localStorage.getItem('historial_partes') || '[]');
-            historial.unshift(parte);
-            
-            // Mantener solo los últimos 50 partes
-            if (historial.length > 50) {
-                historial = historial.slice(0, 50);
-            }
-
-            localStorage.setItem('historial_partes', JSON.stringify(historial));
-            alert('✅ Parte guardado exitosamente');
-        }
-
-        function mostrarHistorial() {
-            const historialSection = document.getElementById('historial-section');
-            const historialLista = document.getElementById('historial-lista');
-            
-            const historial = JSON.parse(localStorage.getItem('historial_partes') || '[]');
-
-            if (historial.length === 0) {
-                alert('📋 No hay partes guardados en el historial');
-                return;
-            }
-
-            historialLista.innerHTML = historial.map(parte => `
-                <div class="historial-item" onclick="cargarParte(${parte.id})">
-                    <div class="fecha">📅 ${parte.fecha} - ⏰ ${parte.hora}</div>
-                    <div class="datos">
-                        👤 ${parte.oficial}<br>
-                        📊 Efectiva: ${parte.datos.totales.totalEfectiva} | 
-                        Disponible: ${parte.datos.totales.totalDisponible} | 
-                        Novedades: ${parte.datos.totales.totalNovedades}
-                    </div>
-                </div>
-            `).join('');
-
-            historialSection.style.display = 'block';
-            historialSection.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function cargarParte(id) {
-            const historial = JSON.parse(localStorage.getItem('historial_partes') || '[]');
-            const parte = historial.find(p => p.id === id);
-
-            if (!parte) {
-                alert('❌ No se pudo cargar el parte');
-                return;
-            }
-
-            if (!confirm('⚠️ ¿Cargar este parte? Se perderán los datos actuales no guardados.')) {
-                return;
-            }
-
-            document.getElementById('fecha-parte').value = parte.fecha;
-            document.getElementById('hora-parte').value = parte.hora;
-            document.getElementById('oficial-cargo').value = parte.oficial;
-
-            ordenDeLlenado.clear();
-            
-            // Limpiar y cargar detalles de novedades
-            for (let key in detallesNovedades) {
-                delete detallesNovedades[key];
-            }
-            if (parte.detallesNovedades) {
-                Object.assign(detallesNovedades, parte.detallesNovedades);
-            }
-            
-            parte.datos.secciones.forEach((seccion, i) => {
-                const idx = i + 1;
-                document.getElementById(`efectiva${idx}`).value = seccion.e > 0 ? seccion.e : '';
-                document.getElementById(`disponible${idx}`).value = seccion.d > 0 ? seccion.d : '';
+            try {
+                updateSyncStatus('🔄 Guardando...', 'online');
                 
-                if (seccion.e > 0 || seccion.d > 0) {
-                    ordenDeLlenado.add(idx);
-                }
-            });
+                const parteId = `parte_${Date.now()}`;
+                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
+                
+                const parte = {
+                    fecha,
+                    hora,
+                    oficial,
+                    datos,
+                    detallesNovedades: {...detallesNovedades},
+                    timestamp: new Date().toISOString()
+                };
 
-            calcularParte();
-            document.getElementById('historial-section').style.display = 'none';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            alert('✅ Parte cargado exitosamente');
+                await setDoc(parteRef, parte);
+                
+                updateSyncStatus('✅ Guardado exitosamente', 'online');
+                alert('✅ Parte guardado exitosamente en la nube');
+            } catch (error) {
+                console.error('Error guardando parte:', error);
+                updateSyncStatus('❌ Error al guardar', 'offline');
+                alert('❌ Error al guardar el parte. Por favor intente nuevamente.');
+            }
+        }
+
+        async function mostrarHistorial() {
+            if (!currentUser) {
+                alert('❌ Error: No hay usuario autenticado');
+                return;
+            }
+
+            try {
+                updateSyncStatus('🔄 Cargando historial...', 'online');
+                
+                const partesRef = collection(db, `usuarios/${currentUser.uid}/partes`);
+                const q = query(partesRef, orderBy('timestamp', 'desc'), limit(50));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    updateSyncStatus('✅ Conectado', 'online');
+                    alert('📋 No hay partes guardados en el historial');
+                    return;
+                }
+
+                const historial = [];
+                querySnapshot.forEach((doc) => {
+                    historial.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                const historialSection = document.getElementById('historial-section');
+                const historialLista = document.getElementById('historial-lista');
+
+                historialLista.innerHTML = historial.map(parte => `
+                    <div class="historial-item" onclick="window.cargarParte('${parte.id}')">
+                        <button class="btn-eliminar-parte" onclick="event.stopPropagation(); window.eliminarParte('${parte.id}')">🗑️ Eliminar</button>
+                        <div class="fecha">📅 ${parte.fecha} - ⏰ ${parte.hora}</div>
+                        <div class="datos">
+                            👤 ${parte.oficial}<br>
+                            📊 Efectiva: ${parte.datos.totales.totalEfectiva} | 
+                            Disponible: ${parte.datos.totales.totalDisponible} | 
+                            Novedades: ${parte.datos.totales.totalNovedades}
+                        </div>
+                    </div>
+                `).join('');
+
+                historialSection.style.display = 'block';
+                historialSection.scrollIntoView({ behavior: 'smooth' });
+                updateSyncStatus('✅ Historial cargado', 'online');
+            } catch (error) {
+                console.error('Error cargando historial:', error);
+                updateSyncStatus('❌ Error cargando historial', 'offline');
+                alert('❌ Error al cargar el historial');
+            }
+        }
+
+        async function cargarParte(parteId) {
+            if (!currentUser) return;
+
+            try {
+                updateSyncStatus('🔄 Cargando parte...', 'online');
+                
+                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
+                const parteDoc = await getDoc(parteRef);
+
+                if (!parteDoc.exists()) {
+                    alert('❌ No se pudo cargar el parte');
+                    return;
+                }
+
+                if (!confirm('⚠️ ¿Cargar este parte? Se perderán los datos actuales no guardados.')) {
+                    return;
+                }
+
+                const parte = parteDoc.data();
+
+                document.getElementById('fecha-parte').value = parte.fecha;
+                document.getElementById('hora-parte').value = parte.hora;
+                document.getElementById('oficial-cargo').value = parte.oficial;
+
+                ordenDeLlenado.clear();
+                
+                for (let key in detallesNovedades) {
+                    delete detallesNovedades[key];
+                }
+                if (parte.detallesNovedades) {
+                    Object.assign(detallesNovedades, parte.detallesNovedades);
+                }
+                
+                parte.datos.secciones.forEach((seccion, i) => {
+                    const idx = i + 1;
+                    document.getElementById(`efectiva${idx}`).value = seccion.e > 0 ? seccion.e : '';
+                    document.getElementById(`disponible${idx}`).value = seccion.d > 0 ? seccion.d : '';
+                    
+                    if (seccion.e > 0 || seccion.d > 0) {
+                        ordenDeLlenado.add(idx);
+                    }
+                });
+
+                calcularParte();
+                document.getElementById('historial-section').style.display = 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                updateSyncStatus('✅ Parte cargado', 'online');
+                alert('✅ Parte cargado exitosamente');
+            } catch (error) {
+                console.error('Error cargando parte:', error);
+                updateSyncStatus('❌ Error cargando parte', 'offline');
+                alert('❌ Error al cargar el parte');
+            }
+        }
+
+        async function eliminarParte(parteId) {
+            if (!currentUser) return;
+
+            if (!confirm('⚠️ ¿Está seguro de eliminar este parte? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            try {
+                updateSyncStatus('🔄 Eliminando...', 'online');
+                
+                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
+                await deleteDoc(parteRef);
+                
+                updateSyncStatus('✅ Parte eliminado', 'online');
+                alert('✅ Parte eliminado exitosamente');
+                
+                // Recargar historial
+                await mostrarHistorial();
+            } catch (error) {
+                console.error('Error eliminando parte:', error);
+                updateSyncStatus('❌ Error eliminando', 'offline');
+                alert('❌ Error al eliminar el parte');
+            }
         }
 
         function cargarDatosGuardados() {
@@ -1282,7 +1440,6 @@
             document.getElementById('btnGuardar').addEventListener('click', guardarParte);
             document.getElementById('btnHistorial').addEventListener('click', mostrarHistorial);
 
-            // Listeners para el modal de detalles de novedades
             document.getElementById('btn-guardar-novedades').addEventListener('click', guardarDetalleNovedades);
             document.getElementById('btn-cerrar-novedades').addEventListener('click', cerrarModalNovedades);
             document.getElementById('textarea-novedades').addEventListener('input', actualizarContador);
@@ -1321,20 +1478,22 @@
             document.getElementById('btn-close-master-key-modal').addEventListener('click', () => {
                 document.getElementById('master-key-modal').style.display = 'none';
                 document.getElementById('login-overlay').style.display = 'flex';
+                document.getElementById('login-form').style.display = 'block';
             });
 
             document.getElementById('btn-change-pin').addEventListener('click', changeAccessPin);
 
             document.getElementById('btn-close-pin-modal').addEventListener('click', () => {
                 document.getElementById('config-pin-modal').style.display = 'none';
-                if (checkAuthentication()) {
+                if (isAuthenticated) {
                     document.getElementById('app-content').style.display = 'block';
                 }
             });
         }
 
-        // Función global para cargar parte desde historial
+        // Funciones globales
         window.cargarParte = cargarParte;
+        window.eliminarParte = eliminarParte;
         window.abrirDetalleNovedades = abrirDetalleNovedades;
         window.agregarSugerencia = agregarSugerencia;
 
@@ -1345,12 +1504,26 @@
             setupSecurityListeners();
             setupActivityListeners();
 
-            displayCurrentPin();
-            if (!checkAuthentication()) {
-                document.getElementById('login-overlay').style.display = 'flex';
-            } else {
-                showApp();
-            }
+            // Autenticación con Firebase
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('Usuario autenticado:', user.uid);
+                    await displayCurrentPin();
+                    document.getElementById('firebase-loading').style.display = 'none';
+                    document.getElementById('login-form').style.display = 'block';
+                } else {
+                    // Si no hay usuario, iniciar sesión anónima
+                    try {
+                        const userCredential = await signInAnonymously(auth);
+                        currentUser = userCredential.user;
+                        console.log('Sesión anónima iniciada:', currentUser.uid);
+                    } catch (error) {
+                        console.error('Error iniciando sesión:', error);
+                        document.getElementById('firebase-loading').textContent = '❌ Error de conexión';
+                    }
+                }
+            });
         });
     </script>
 
