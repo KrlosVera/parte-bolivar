@@ -505,13 +505,6 @@
             color: #666;
         }
 
-        .historial-item .creador {
-            font-size: 0.8em;
-            color: #888;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
         .btn-eliminar-parte {
             position: absolute;
             right: 10px;
@@ -554,33 +547,6 @@
             background: rgba(220, 53, 69, 0.2);
         }
 
-        .user-identifier {
-            background: rgba(255,255,255,0.1);
-            color: #FCD116;
-            padding: 8px 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            text-align: center;
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .user-identifier strong {
-            color: white;
-        }
-
-        .admin-badge {
-            background: #FCD116;
-            color: #005236;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-
         @media (max-width: 600px) {
             .header h1 {
                 font-size: 1.2em;
@@ -608,18 +574,16 @@
             </div>
             <div id="login-form" style="display: none;">
                 <p style="text-align: center; color: #666; margin-bottom: 15px;">
-                    Ingrese su nombre de usuario y PIN compartido
+                    Ingrese su PIN de acceso
                 </p>
-                <input type="text" id="username-input" placeholder="Nombre de usuario" maxlength="30" />
                 <input type="password" id="pin-input" placeholder="PIN (4 dígitos)" maxlength="4" />
                 <button id="btn-login" class="btn-primary" style="width: 100%; margin-top: 10px;">Ingresar</button>
                 <p id="login-message" class="modal-message"></p>
                 <button id="btn-show-master-key" class="btn-warning" style="width: 100%; margin-top: 15px; font-size: 0.9em;">
-                    🔑 Admin: Cambiar PIN
+                    Cambiar PIN
                 </button>
                 <p style="font-size: 0.85em; color: #888; margin-top: 15px; text-align: center;">
-                    <strong>PIN Compartido Global</strong><br>
-                    Actual: <span id="current-pin-display" style="font-weight: bold;">****</span>
+                    PIN actual: <span id="current-pin-display" style="font-weight: bold;">****</span>
                 </p>
             </div>
         </div>
@@ -630,7 +594,7 @@
         <div class="modal-content">
             <h2>🔐 Clave Maestra</h2>
             <p style="text-align: center; color: #666; margin-bottom: 15px;">
-                Ingrese la clave maestra para modificar el PIN compartido de todos los usuarios
+                Ingrese la clave maestra para modificar el PIN
             </p>
             <input type="password" id="master-key-input" placeholder="Clave Maestra" maxlength="4" />
             <button id="btn-check-master-key" class="btn-primary" style="width: 100%; margin-top: 10px;">Verificar</button>
@@ -642,10 +606,7 @@
     <!-- Config PIN Modal -->
     <div id="config-pin-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
-            <h2>🔑 Nuevo PIN Global</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 10px; font-size: 0.9em;">
-                Este PIN será usado por todos los usuarios
-            </p>
+            <h2>🔑 Nuevo PIN</h2>
             <input type="password" id="new-pin-input" placeholder="Nuevo PIN (4 dígitos)" maxlength="4" />
             <input type="password" id="confirm-pin-input" placeholder="Confirmar PIN" maxlength="4" />
             <button id="btn-change-pin" class="btn-success" style="width: 100%; margin-top: 10px;">Guardar PIN</button>
@@ -692,10 +653,6 @@
         <div class="container">
             <div class="sync-status" id="sync-status">
                 🔄 Sincronizando...
-            </div>
-
-            <div class="user-identifier" id="user-identifier">
-                👤 Usuario: <strong id="display-username">Cargando...</strong>
             </div>
 
             <div class="header">
@@ -755,7 +712,7 @@
             </div>
 
             <div id="historial-section" class="historial" style="display: none;">
-                <h4>📚 Historial de Partes Compartido</h4>
+                <h4>📚 Historial de Partes</h4>
                 <div id="historial-lista"></div>
             </div>
 
@@ -797,7 +754,6 @@
 
         // Variables globales
         let currentUser = null;
-        let currentUsername = '';
         let activityTimer;
         let isAuthenticated = false;
         const ordenDeLlenado = new Set();
@@ -810,9 +766,10 @@
         }
 
         async function getStoredPinHash() {
+            if (!currentUser) return hash(DEFAULT_ACCESS_PIN);
+            
             try {
-                // PIN compartido global para todos los usuarios
-                const configRef = doc(db, 'config/shared_pin');
+                const configRef = doc(db, `usuarios/${currentUser.uid}/config/pin`);
                 const configDoc = await getDoc(configRef);
                 
                 if (configDoc.exists()) {
@@ -826,15 +783,12 @@
         }
 
         async function savePin(pinHash) {
+            if (!currentUser) return;
+            
             try {
-                // Guardar PIN compartido global
-                const configRef = doc(db, 'config/shared_pin');
-                await setDoc(configRef, { 
-                    pinHash,
-                    updatedAt: new Date().toISOString(),
-                    updatedBy: currentUsername || currentUser?.uid || 'unknown'
-                }, { merge: true });
-                updateSyncStatus('✅ PIN actualizado para todos', 'online');
+                const configRef = doc(db, `usuarios/${currentUser.uid}/config/pin`);
+                await setDoc(configRef, { pinHash }, { merge: true });
+                updateSyncStatus('✅ PIN actualizado', 'online');
             } catch (error) {
                 console.error('Error guardando PIN:', error);
                 updateSyncStatus('❌ Error actualizando PIN', 'offline');
@@ -855,8 +809,6 @@
         function logout() {
             clearTimeout(activityTimer);
             isAuthenticated = false;
-            currentUsername = '';
-            localStorage.removeItem('parte_username');
             document.getElementById('app-content').style.display = 'none';
             document.getElementById('login-overlay').style.display = 'flex';
             document.getElementById('login-form').style.display = 'block';
@@ -880,20 +832,11 @@
         }
 
         async function handleLogin() {
-            const usernameInput = document.getElementById('username-input');
             const pinInput = document.getElementById('pin-input');
             const messageDiv = document.getElementById('login-message');
-            const username = usernameInput.value.trim();
             const pin = pinInput.value;
 
             messageDiv.textContent = '';
-
-            if (!username) {
-                messageDiv.textContent = '❌ Por favor ingrese su nombre de usuario';
-                usernameInput.classList.add('invalido');
-                setTimeout(() => usernameInput.classList.remove('invalido'), 1000);
-                return;
-            }
 
             if (pin.length !== 4) {
                 messageDiv.textContent = '❌ El PIN debe ser de 4 dígitos';
@@ -905,9 +848,6 @@
 
             if (enteredHash === storedHash) {
                 isAuthenticated = true;
-                currentUsername = username;
-                localStorage.setItem('parte_username', username);
-                usernameInput.value = '';
                 pinInput.value = '';
                 showApp();
             } else {
@@ -959,7 +899,7 @@
             await savePin(newPinHash);
 
             messageDiv.className = 'modal-message success';
-            messageDiv.textContent = '✅ PIN compartido cambiado exitosamente. Ahora todos usarán este nuevo PIN.';
+            messageDiv.textContent = '✅ PIN cambiado exitosamente';
 
             await displayCurrentPin();
 
@@ -970,13 +910,12 @@
                 if (isAuthenticated) {
                     document.getElementById('app-content').style.display = 'block';
                 }
-            }, 3000);
+            }, 2000);
         }
 
         function showApp() {
             document.getElementById('login-overlay').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            document.getElementById('display-username').textContent = currentUsername;
             resetTimer();
             cargarDatosGuardados();
             calcularParte();
@@ -1230,8 +1169,7 @@
             texto += `═══════════════════════════════════════════════════════\n\n`;
             texto += `Fecha: ${fecha}\n`;
             texto += `Hora: ${hora}\n`;
-            texto += `Oficial a Cargo: ${oficial}\n`;
-            texto += `Registrado por: ${currentUsername}\n\n`;
+            texto += `Oficial a Cargo: ${oficial}\n\n`;
             texto += `───────────────────────────────────────────────────────\n`;
             texto += `DETALLE POR SECCIONES\n`;
             texto += `───────────────────────────────────────────────────────\n\n`;
@@ -1310,6 +1248,11 @@
         }
 
         async function guardarParte() {
+            if (!currentUser) {
+                alert('❌ Error: No hay usuario autenticado');
+                return;
+            }
+
             const datos = recolectarYCalcularTotales();
             const fecha = document.getElementById('fecha-parte').value;
             const hora = document.getElementById('hora-parte').value;
@@ -1328,9 +1271,8 @@
             try {
                 updateSyncStatus('🔄 Guardando...', 'online');
                 
-                // Guardar en colección compartida global
                 const parteId = `parte_${Date.now()}`;
-                const parteRef = doc(db, `partes_compartidos/${parteId}`);
+                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
                 
                 const parte = {
                     fecha,
@@ -1338,15 +1280,13 @@
                     oficial,
                     datos,
                     detallesNovedades: {...detallesNovedades},
-                    timestamp: new Date().toISOString(),
-                    creadoPor: currentUsername,
-                    creadoPorUID: currentUser?.uid || 'unknown'
+                    timestamp: new Date().toISOString()
                 };
 
                 await setDoc(parteRef, parte);
                 
                 updateSyncStatus('✅ Guardado exitosamente', 'online');
-                alert('✅ Parte guardado exitosamente (visible para todos)');
+                alert('✅ Parte guardado exitosamente en la nube');
             } catch (error) {
                 console.error('Error guardando parte:', error);
                 updateSyncStatus('❌ Error al guardar', 'offline');
@@ -1355,11 +1295,15 @@
         }
 
         async function mostrarHistorial() {
+            if (!currentUser) {
+                alert('❌ Error: No hay usuario autenticado');
+                return;
+            }
+
             try {
                 updateSyncStatus('🔄 Cargando historial...', 'online');
                 
-                // Cargar historial compartido global
-                const partesRef = collection(db, 'partes_compartidos');
+                const partesRef = collection(db, `usuarios/${currentUser.uid}/partes`);
                 const q = query(partesRef, orderBy('timestamp', 'desc'), limit(50));
                 const querySnapshot = await getDocs(q);
 
@@ -1382,16 +1326,13 @@
 
                 historialLista.innerHTML = historial.map(parte => `
                     <div class="historial-item" onclick="window.cargarParte('${parte.id}')">
-                        <button class="btn-eliminar-parte" onclick="event.stopPropagation(); window.eliminarParte('${parte.id}', '${parte.creadoPor || 'Desconocido'}')">🗑️ Eliminar</button>
+                        <button class="btn-eliminar-parte" onclick="event.stopPropagation(); window.eliminarParte('${parte.id}')">🗑️ Eliminar</button>
                         <div class="fecha">📅 ${parte.fecha} - ⏰ ${parte.hora}</div>
                         <div class="datos">
                             👤 ${parte.oficial}<br>
                             📊 Efectiva: ${parte.datos.totales.totalEfectiva} | 
                             Disponible: ${parte.datos.totales.totalDisponible} | 
                             Novedades: ${parte.datos.totales.totalNovedades}
-                        </div>
-                        <div class="creador">
-                            ✍️ Registrado por: ${parte.creadoPor || 'Usuario desconocido'}
                         </div>
                     </div>
                 `).join('');
@@ -1407,11 +1348,12 @@
         }
 
         async function cargarParte(parteId) {
+            if (!currentUser) return;
+
             try {
                 updateSyncStatus('🔄 Cargando parte...', 'online');
                 
-                // Cargar desde colección compartida
-                const parteRef = doc(db, `partes_compartidos/${parteId}`);
+                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
                 const parteDoc = await getDoc(parteRef);
 
                 if (!parteDoc.exists()) {
@@ -1460,24 +1402,21 @@
             }
         }
 
-        async function eliminarParte(parteId, creador) {
-            const mensaje = creador ? 
-                `⚠️ ¿Está seguro de eliminar este parte creado por ${creador}?\n\nEsta acción no se puede deshacer.` :
-                '⚠️ ¿Está seguro de eliminar este parte?\n\nEsta acción no se puede deshacer.';
-            
-            if (!confirm(mensaje)) {
+        async function eliminarParte(parteId) {
+            if (!currentUser) return;
+
+            if (!confirm('⚠️ ¿Está seguro de eliminar este parte? Esta acción no se puede deshacer.')) {
                 return;
             }
 
             try {
                 updateSyncStatus('🔄 Eliminando...', 'online');
                 
-                // Eliminar de colección compartida
-                const parteRef = doc(db, `partes_compartidos/${parteId}`);
+                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
                 await deleteDoc(parteRef);
                 
                 updateSyncStatus('✅ Parte eliminado', 'online');
-                alert(`✅ Parte eliminado exitosamente por ${currentUsername}`);
+                alert('✅ Parte eliminado exitosamente');
                 
                 // Recargar historial
                 await mostrarHistorial();
@@ -1492,12 +1431,6 @@
             const ahora = new Date();
             document.getElementById('fecha-parte').value = ahora.toISOString().split('T')[0];
             document.getElementById('hora-parte').value = ahora.toTimeString().slice(0, 5);
-            
-            // Recuperar nombre de usuario guardado
-            const savedUsername = localStorage.getItem('parte_username');
-            if (savedUsername) {
-                document.getElementById('username-input').value = savedUsername;
-            }
         }
 
         function adjuntarListeners() {
@@ -1524,13 +1457,6 @@
 
         function setupSecurityListeners() {
             document.getElementById('btn-login').addEventListener('click', handleLogin);
-            
-            document.getElementById('username-input').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    document.getElementById('pin-input').focus();
-                }
-            });
-            
             document.getElementById('pin-input').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') handleLogin();
             });
@@ -1577,7 +1503,6 @@
             adjuntarListeners();
             setupSecurityListeners();
             setupActivityListeners();
-            cargarDatosGuardados();
 
             // Autenticación con Firebase
             onAuthStateChanged(auth, async (user) => {
@@ -1604,3 +1529,4 @@
 
 </body>
 </html>
+
