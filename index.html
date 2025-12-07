@@ -15,7 +15,7 @@
             font-family: 'Arial', 'Helvetica', sans-serif;
             background: linear-gradient(135deg, #005236 0%, #003d28 100%);
             min-height: 100vh;
-            padding: 20px 10px;
+            padding: 15px 8px;
             color: #222;
         }
 
@@ -26,10 +26,10 @@
 
         .header {
             background: linear-gradient(to right, #FCD116, #f4c430);
-            border-radius: 15px 15px 0 0;
-            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            padding: 15px;
             text-align: center;
-            border-bottom: 4px solid #005236;
+            border-bottom: 3px solid #005236;
             position: relative;
         }
 
@@ -38,34 +38,34 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 40px;
+            font-size: 28px;
             color: #005236;
         }
 
-        .header::before { left: 20px; }
-        .header::after { right: 20px; }
+        .header::before { left: 15px; }
+        .header::after { right: 15px; }
 
         .header h1 {
             color: #005236;
-            font-size: 1.5em;
+            font-size: 1.2em;
             font-weight: bold;
             text-transform: uppercase;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
         }
 
         .header .subtitle {
             color: #003d28;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 600;
         }
 
         .info-panel {
             background: white;
-            padding: 20px;
+            padding: 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
             border-bottom: 3px solid #FCD116;
         }
 
@@ -75,18 +75,18 @@
         }
 
         .info-field label {
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: bold;
             color: #005236;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
 
         .info-field input {
-            padding: 10px;
+            padding: 8px;
             border: 2px solid #ddd;
             border-radius: 5px;
-            font-size: 1em;
+            font-size: 0.95em;
             transition: all 0.3s;
         }
 
@@ -98,49 +98,49 @@
 
         .seccion {
             background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-left: 5px solid #FCD116;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-left: 4px solid #FCD116;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .seccion h3 {
             color: #005236;
-            font-size: 1.1em;
-            margin-bottom: 12px;
+            font-size: 1em;
+            margin-bottom: 10px;
             font-weight: bold;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .seccion h3::before {
             content: '▶';
             color: #FCD116;
-            font-size: 0.8em;
+            font-size: 0.75em;
         }
 
         .fila {
             display: grid;
             grid-template-columns: 2fr 2fr 1fr;
-            gap: 10px;
+            gap: 8px;
             align-items: end;
         }
 
         .campo-grupo label {
             display: block;
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: #005236;
             text-align: center;
         }
 
         .campo-grupo input {
             width: 100%;
-            padding: 10px;
-            font-size: 1.1em;
+            padding: 8px;
+            font-size: 1em;
             border: 2px solid #ddd;
             border-radius: 5px;
             text-align: center;
@@ -162,7 +162,7 @@
         .novedades-container {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .novedades-container input {
@@ -172,11 +172,11 @@
         .btn-detalle-nov {
             background: #FCD116;
             border: none;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -211,14 +211,14 @@
 
         .modal-novedades textarea {
             width: 100%;
-            min-height: 150px;
-            padding: 12px;
+            min-height: 120px;
+            padding: 10px;
             border: 2px solid #ddd;
             border-radius: 5px;
             font-family: inherit;
-            font-size: 0.95em;
+            font-size: 0.9em;
             resize: vertical;
-            margin: 10px 0;
+            margin: 8px 0;
         }
 
         .modal-novedades textarea:focus {
@@ -229,16 +229,16 @@
 
         .sugerencias-novedades {
             background: #f8f9fa;
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
-            margin: 10px 0;
-            font-size: 0.85em;
+            margin: 8px 0;
+            font-size: 0.8em;
         }
 
         .sugerencias-novedades .titulo-sugerencias {
             font-weight: bold;
             color: #005236;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: block;
         }
 
@@ -246,12 +246,12 @@
             display: inline-block;
             background: white;
             border: 1px solid #ddd;
-            padding: 4px 10px;
-            margin: 3px;
-            border-radius: 15px;
+            padding: 3px 8px;
+            margin: 2px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         .chip-sugerencia:hover {
@@ -262,9 +262,9 @@
 
         .contador-caracteres {
             text-align: right;
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #666;
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
         .campo-grupo input.invalido {
@@ -281,14 +281,14 @@
 
         .botones-principales {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin: 15px 0;
         }
 
         button {
-            padding: 12px 20px;
-            font-size: 1em;
+            padding: 10px 15px;
+            font-size: 0.9em;
             font-weight: bold;
             border: none;
             border-radius: 8px;
@@ -320,7 +320,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         button:active {
@@ -336,82 +336,83 @@
         .resumen {
             background: linear-gradient(135deg, #005236, #003d28);
             color: #FCD116;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            margin: 20px 0;
+            margin: 15px 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .resumen h3 {
             text-align: center;
-            margin-bottom: 15px;
-            font-size: 1.3em;
+            margin-bottom: 12px;
+            font-size: 1.1em;
             text-transform: uppercase;
         }
 
         .resumen-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
             text-align: center;
         }
 
         .resumen-item {
             background: rgba(252, 209, 22, 0.1);
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             border: 2px solid #FCD116;
         }
 
         .resumen-item .label {
-            font-size: 0.85em;
-            margin-bottom: 8px;
+            font-size: 0.8em;
+            margin-bottom: 6px;
             opacity: 0.9;
         }
 
         .resumen-item .value {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: bold;
         }
 
         .lista-novedades {
             background: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .lista-novedades h4 {
             color: #005236;
-            margin-bottom: 15px;
-            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-size: 1em;
             text-transform: uppercase;
             border-bottom: 2px solid #FCD116;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .lista-novedades .novedad-item {
-            padding: 10px;
-            margin: 5px 0;
+            padding: 8px;
+            margin: 4px 0;
             background: #f8f9fa;
             border-left: 4px solid #FCD116;
             border-radius: 5px;
+            font-size: 0.9em;
         }
 
         .footer {
             background: rgba(255,255,255,0.1);
             color: #FCD116;
             text-align: center;
-            padding: 20px;
-            margin-top: 30px;
+            padding: 15px;
+            margin-top: 20px;
             border-radius: 10px;
-            font-size: 0.85em;
+            font-size: 0.8em;
         }
 
         .footer strong {
             display: block;
-            margin-bottom: 5px;
-            font-size: 1.1em;
+            margin-bottom: 4px;
+            font-size: 1.05em;
         }
 
         .modal-overlay {
@@ -425,40 +426,45 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 10px;
         }
 
         .modal-content {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             max-width: 400px;
-            width: 90%;
+            width: 100%;
             border-top: 5px solid #FCD116;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-content h2 {
             color: #005236;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-transform: uppercase;
+            font-size: 1.3em;
         }
 
         .modal-content input {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
+            padding: 10px;
+            margin: 8px 0;
             border: 2px solid #ddd;
             border-radius: 5px;
-            font-size: 1.1em;
+            font-size: 1em;
             text-align: center;
         }
 
         .modal-message {
             color: #dc3545;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px;
             font-weight: bold;
+            font-size: 0.9em;
         }
 
         .modal-message.success {
@@ -467,20 +473,35 @@
 
         .historial {
             background: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .historial h4 {
             color: #005236;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-transform: uppercase;
+            font-size: 1em;
+        }
+
+        .historial-grupo {
+            margin-bottom: 15px;
+        }
+
+        .historial-fecha-grupo {
+            background: #005236;
+            color: #FCD116;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.9em;
         }
 
         .historial-item {
-            padding: 15px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 6px 0;
             background: #f8f9fa;
             border-radius: 8px;
             border-left: 4px solid #FCD116;
@@ -497,46 +518,65 @@
         .historial-item .fecha {
             font-weight: bold;
             color: #005236;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 0.9em;
         }
 
         .historial-item .datos {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #666;
         }
 
         .btn-eliminar-parte {
             position: absolute;
-            right: 10px;
-            top: 10px;
+            right: 8px;
+            top: 8px;
             background: #dc3545;
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 4px 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8em;
+            font-size: 0.75em;
         }
 
         .btn-eliminar-parte:hover {
             background: #c82333;
         }
 
+        .btn-ver-mas {
+            width: 100%;
+            margin-top: 10px;
+            background: #005236;
+            color: #FCD116;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-ver-mas:hover {
+            background: #003d28;
+            transform: translateY(-2px);
+        }
+
         .loading-indicator {
             text-align: center;
             color: #FCD116;
-            padding: 20px;
-            font-size: 1.2em;
+            padding: 15px;
+            font-size: 1.1em;
         }
 
         .sync-status {
             background: rgba(255,255,255,0.1);
             color: #FCD116;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             border-radius: 5px;
-            margin: 10px 0;
-            font-size: 0.9em;
+            margin: 8px 0;
+            font-size: 0.85em;
         }
 
         .sync-status.online {
@@ -549,16 +589,29 @@
 
         @media (max-width: 600px) {
             .header h1 {
-                font-size: 1.2em;
+                font-size: 1em;
+            }
+            
+            .header .subtitle {
+                font-size: 0.75em;
             }
             
             .fila {
-                grid-template-columns: 1fr 1fr 80px;
+                grid-template-columns: 1fr 1fr 70px;
             }
 
             .header::before,
             .header::after {
-                font-size: 25px;
+                font-size: 20px;
+            }
+
+            .resumen-item .value {
+                font-size: 1.5em;
+            }
+
+            button {
+                font-size: 0.85em;
+                padding: 8px 12px;
             }
         }
     </style>
@@ -573,16 +626,16 @@
                 🔄 Conectando con Firebase...
             </div>
             <div id="login-form" style="display: none;">
-                <p style="text-align: center; color: #666; margin-bottom: 15px;">
+                <p style="text-align: center; color: #666; margin-bottom: 12px; font-size: 0.9em;">
                     Ingrese su PIN de acceso
                 </p>
                 <input type="password" id="pin-input" placeholder="PIN (4 dígitos)" maxlength="4" />
-                <button id="btn-login" class="btn-primary" style="width: 100%; margin-top: 10px;">Ingresar</button>
+                <button id="btn-login" class="btn-primary" style="width: 100%; margin-top: 8px;">Ingresar</button>
                 <p id="login-message" class="modal-message"></p>
-                <button id="btn-show-master-key" class="btn-warning" style="width: 100%; margin-top: 15px; font-size: 0.9em;">
-                    Cambiar PIN
+                <button id="btn-show-master-key" class="btn-warning" style="width: 100%; margin-top: 12px; font-size: 0.85em;">
+                    Cambiar PIN (Clave Maestra)
                 </button>
-                <p style="font-size: 0.85em; color: #888; margin-top: 15px; text-align: center;">
+                <p style="font-size: 0.8em; color: #888; margin-top: 12px; text-align: center;">
                     PIN actual: <span id="current-pin-display" style="font-weight: bold;">****</span>
                 </p>
             </div>
@@ -593,12 +646,12 @@
     <div id="master-key-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <h2>🔐 Clave Maestra</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 15px;">
-                Ingrese la clave maestra para modificar el PIN
+            <p style="text-align: center; color: #666; margin-bottom: 12px; font-size: 0.9em;">
+                Ingrese la clave maestra para modificar el PIN compartido
             </p>
             <input type="password" id="master-key-input" placeholder="Clave Maestra" maxlength="4" />
-            <button id="btn-check-master-key" class="btn-primary" style="width: 100%; margin-top: 10px;">Verificar</button>
-            <button class="btn-danger" id="btn-close-master-key-modal" style="width: 100%; margin-top: 10px;">Cancelar</button>
+            <button id="btn-check-master-key" class="btn-primary" style="width: 100%; margin-top: 8px;">Verificar</button>
+            <button class="btn-danger" id="btn-close-master-key-modal" style="width: 100%; margin-top: 8px;">Cancelar</button>
             <p id="master-key-message" class="modal-message"></p>
         </div>
     </div>
@@ -606,11 +659,14 @@
     <!-- Config PIN Modal -->
     <div id="config-pin-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
-            <h2>🔑 Nuevo PIN</h2>
+            <h2>🔑 Nuevo PIN Compartido</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 12px; font-size: 0.9em;">
+                Este PIN será válido para todos los usuarios
+            </p>
             <input type="password" id="new-pin-input" placeholder="Nuevo PIN (4 dígitos)" maxlength="4" />
             <input type="password" id="confirm-pin-input" placeholder="Confirmar PIN" maxlength="4" />
-            <button id="btn-change-pin" class="btn-success" style="width: 100%; margin-top: 10px;">Guardar PIN</button>
-            <button class="btn-danger" id="btn-close-pin-modal" style="width: 100%; margin-top: 10px;">Cancelar</button>
+            <button id="btn-change-pin" class="btn-success" style="width: 100%; margin-top: 8px;">Guardar PIN</button>
+            <button class="btn-danger" id="btn-close-pin-modal" style="width: 100%; margin-top: 8px;">Cancelar</button>
             <p id="pin-config-message" class="modal-message"></p>
         </div>
     </div>
@@ -619,7 +675,7 @@
     <div id="modal-detalle-novedades" class="modal-overlay" style="display: none;">
         <div class="modal-content modal-novedades">
             <h2>📝 Detalle de Novedades</h2>
-            <p style="color: #666; font-size: 0.9em; text-align: center; margin-bottom: 10px;">
+            <p style="color: #666; font-size: 0.85em; text-align: center; margin-bottom: 8px;">
                 <strong id="seccion-actual-titulo"></strong>
             </p>
             
@@ -643,8 +699,8 @@
                 <span id="contador-chars">0</span> / 500 caracteres
             </div>
 
-            <button id="btn-guardar-novedades" class="btn-success" style="width: 100%; margin-top: 10px;">💾 Guardar Detalles</button>
-            <button id="btn-cerrar-novedades" class="btn-danger" style="width: 100%; margin-top: 10px;">❌ Cancelar</button>
+            <button id="btn-guardar-novedades" class="btn-success" style="width: 100%; margin-top: 8px;">💾 Guardar Detalles</button>
+            <button id="btn-cerrar-novedades" class="btn-danger" style="width: 100%; margin-top: 8px;">❌ Cancelar</button>
         </div>
     </div>
 
@@ -675,7 +731,7 @@
                 </div>
             </div>
 
-            <div id="secciones" style="margin-top: 20px;"></div>
+            <div id="secciones" style="margin-top: 15px;"></div>
 
             <div class="botones-principales">
                 <button class="btn-primary" id="btnCalcular">📊 Calcular</button>
@@ -714,6 +770,9 @@
             <div id="historial-section" class="historial" style="display: none;">
                 <h4>📚 Historial de Partes</h4>
                 <div id="historial-lista"></div>
+                <button id="btn-ver-mas" class="btn-ver-mas" style="display: none;">
+                    📖 Ver Más Partes
+                </button>
             </div>
 
             <div class="footer">
@@ -751,6 +810,8 @@
         const MASTER_KEY = '9826';
         const INACTIVITY_TIMEOUT = 30 * 60 * 1000;
         const NUM_SECCIONES = 5;
+        const SHARED_CONFIG_ID = 'shared_config';
+        const PARTES_INICIALES = 1; // Mostrar solo el último parte inicialmente
 
         // Variables globales
         let currentUser = null;
@@ -759,17 +820,17 @@
         const ordenDeLlenado = new Set();
         const detallesNovedades = {};
         let seccionActualEditando = null;
+        let todosLosPartes = [];
+        let mostrandoTodos = false;
 
         // Funciones de seguridad
         function hash(pin) {
-            return btoa(pin + 'carlos_policia_nacional');
+            return btoa(pin + 'carlos_policia_nacional_shared');
         }
 
         async function getStoredPinHash() {
-            if (!currentUser) return hash(DEFAULT_ACCESS_PIN);
-            
             try {
-                const configRef = doc(db, `usuarios/${currentUser.uid}/config/pin`);
+                const configRef = doc(db, `config/${SHARED_CONFIG_ID}`);
                 const configDoc = await getDoc(configRef);
                 
                 if (configDoc.exists()) {
@@ -783,12 +844,10 @@
         }
 
         async function savePin(pinHash) {
-            if (!currentUser) return;
-            
             try {
-                const configRef = doc(db, `usuarios/${currentUser.uid}/config/pin`);
+                const configRef = doc(db, `config/${SHARED_CONFIG_ID}`);
                 await setDoc(configRef, { pinHash }, { merge: true });
-                updateSyncStatus('✅ PIN actualizado', 'online');
+                updateSyncStatus('✅ PIN actualizado para todos', 'online');
             } catch (error) {
                 console.error('Error guardando PIN:', error);
                 updateSyncStatus('❌ Error actualizando PIN', 'offline');
@@ -899,7 +958,7 @@
             await savePin(newPinHash);
 
             messageDiv.className = 'modal-message success';
-            messageDiv.textContent = '✅ PIN cambiado exitosamente';
+            messageDiv.textContent = '✅ PIN compartido cambiado exitosamente';
 
             await displayCurrentPin();
 
@@ -1061,7 +1120,7 @@
                     return `
                         <div class="novedad-item">
                             ${s.seccion}ª Sección → ${textoNov}${iconoDetalle}
-                            ${detalle ? `<div style="margin-top: 5px; padding-left: 15px; font-size: 0.9em; color: #666; white-space: pre-line;">${detalle}</div>` : ''}
+                            ${detalle ? `<div style="margin-top: 5px; padding-left: 15px; font-size: 0.85em; color: #666; white-space: pre-line;">${detalle}</div>` : ''}
                         </div>
                     `;
                 }).join('');
@@ -1212,6 +1271,7 @@
             });
             texto += listaTexto.join(' → ') + '\n\n';
 
+
             texto += `═══════════════════════════════════════════════════════\n`;
             texto += `Policía Nacional de Colombia - "Dios y Patria"\n`;
             texto += `Código desarrollado por: Carlos Alberto Vera\n`;
@@ -1248,11 +1308,6 @@
         }
 
         async function guardarParte() {
-            if (!currentUser) {
-                alert('❌ Error: No hay usuario autenticado');
-                return;
-            }
-
             const datos = recolectarYCalcularTotales();
             const fecha = document.getElementById('fecha-parte').value;
             const hora = document.getElementById('hora-parte').value;
@@ -1272,7 +1327,7 @@
                 updateSyncStatus('🔄 Guardando...', 'online');
                 
                 const parteId = `parte_${Date.now()}`;
-                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
+                const parteRef = doc(db, `partes/${parteId}`);
                 
                 const parte = {
                     fecha,
@@ -1286,7 +1341,7 @@
                 await setDoc(parteRef, parte);
                 
                 updateSyncStatus('✅ Guardado exitosamente', 'online');
-                alert('✅ Parte guardado exitosamente en la nube');
+                alert('✅ Parte guardado exitosamente');
             } catch (error) {
                 console.error('Error guardando parte:', error);
                 updateSyncStatus('❌ Error al guardar', 'offline');
@@ -1294,17 +1349,66 @@
             }
         }
 
-        async function mostrarHistorial() {
-            if (!currentUser) {
-                alert('❌ Error: No hay usuario autenticado');
-                return;
-            }
+        function formatearFecha(fecha) {
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(fecha).toLocaleDateString('es-CO', opciones);
+        }
 
+        function agruparPartesPorFecha(partes) {
+            const grupos = {};
+            
+            partes.forEach(parte => {
+                const fechaSolo = parte.fecha;
+                if (!grupos[fechaSolo]) {
+                    grupos[fechaSolo] = [];
+                }
+                grupos[fechaSolo].push(parte);
+            });
+            
+            return grupos;
+        }
+
+        function mostrarPartesAgrupados(partes, cantidad = null) {
+            const partesAMostrar = cantidad ? partes.slice(0, cantidad) : partes;
+            const grupos = agruparPartesPorFecha(partesAMostrar);
+            
+            let html = '';
+            const fechasOrdenadas = Object.keys(grupos).sort((a, b) => new Date(b) - new Date(a));
+            
+            fechasOrdenadas.forEach(fecha => {
+                const fechaFormateada = formatearFecha(fecha);
+                html += `
+                    <div class="historial-grupo">
+                        <div class="historial-fecha-grupo">📅 ${fechaFormateada}</div>
+                `;
+                
+                grupos[fecha].forEach(parte => {
+                    html += `
+                        <div class="historial-item" onclick="window.cargarParte('${parte.id}')">
+                            <button class="btn-eliminar-parte" onclick="event.stopPropagation(); window.eliminarParte('${parte.id}')">🗑️</button>
+                            <div class="fecha">⏰ ${parte.hora}</div>
+                            <div class="datos">
+                                👤 ${parte.oficial}<br>
+                                📊 Efectiva: ${parte.datos.totales.totalEfectiva} | 
+                                Disponible: ${parte.datos.totales.totalDisponible} | 
+                                Novedades: ${parte.datos.totales.totalNovedades}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+            });
+            
+            return html;
+        }
+
+        async function mostrarHistorial() {
             try {
                 updateSyncStatus('🔄 Cargando historial...', 'online');
                 
-                const partesRef = collection(db, `usuarios/${currentUser.uid}/partes`);
-                const q = query(partesRef, orderBy('timestamp', 'desc'), limit(50));
+                const partesRef = collection(db, 'partes');
+                const q = query(partesRef, orderBy('timestamp', 'desc'), limit(100));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
@@ -1313,9 +1417,9 @@
                     return;
                 }
 
-                const historial = [];
+                todosLosPartes = [];
                 querySnapshot.forEach((doc) => {
-                    historial.push({
+                    todosLosPartes.push({
                         id: doc.id,
                         ...doc.data()
                     });
@@ -1323,19 +1427,17 @@
 
                 const historialSection = document.getElementById('historial-section');
                 const historialLista = document.getElementById('historial-lista');
+                const btnVerMas = document.getElementById('btn-ver-mas');
 
-                historialLista.innerHTML = historial.map(parte => `
-                    <div class="historial-item" onclick="window.cargarParte('${parte.id}')">
-                        <button class="btn-eliminar-parte" onclick="event.stopPropagation(); window.eliminarParte('${parte.id}')">🗑️ Eliminar</button>
-                        <div class="fecha">📅 ${parte.fecha} - ⏰ ${parte.hora}</div>
-                        <div class="datos">
-                            👤 ${parte.oficial}<br>
-                            📊 Efectiva: ${parte.datos.totales.totalEfectiva} | 
-                            Disponible: ${parte.datos.totales.totalDisponible} | 
-                            Novedades: ${parte.datos.totales.totalNovedades}
-                        </div>
-                    </div>
-                `).join('');
+                mostrandoTodos = false;
+                historialLista.innerHTML = mostrarPartesAgrupados(todosLosPartes, PARTES_INICIALES);
+
+                if (todosLosPartes.length > PARTES_INICIALES) {
+                    btnVerMas.style.display = 'block';
+                    btnVerMas.textContent = `📖 Ver Más Partes (${todosLosPartes.length - PARTES_INICIALES} más)`;
+                } else {
+                    btnVerMas.style.display = 'none';
+                }
 
                 historialSection.style.display = 'block';
                 historialSection.scrollIntoView({ behavior: 'smooth' });
@@ -1347,13 +1449,27 @@
             }
         }
 
-        async function cargarParte(parteId) {
-            if (!currentUser) return;
+        function toggleVerMas() {
+            const historialLista = document.getElementById('historial-lista');
+            const btnVerMas = document.getElementById('btn-ver-mas');
+            
+            if (mostrandoTodos) {
+                historialLista.innerHTML = mostrarPartesAgrupados(todosLosPartes, PARTES_INICIALES);
+                btnVerMas.textContent = `📖 Ver Más Partes (${todosLosPartes.length - PARTES_INICIALES} más)`;
+                mostrandoTodos = false;
+                document.getElementById('historial-section').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                historialLista.innerHTML = mostrarPartesAgrupados(todosLosPartes);
+                btnVerMas.textContent = '🔼 Ver Menos';
+                mostrandoTodos = true;
+            }
+        }
 
+        async function cargarParte(parteId) {
             try {
                 updateSyncStatus('🔄 Cargando parte...', 'online');
                 
-                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
+                const parteRef = doc(db, `partes/${parteId}`);
                 const parteDoc = await getDoc(parteRef);
 
                 if (!parteDoc.exists()) {
@@ -1403,8 +1519,6 @@
         }
 
         async function eliminarParte(parteId) {
-            if (!currentUser) return;
-
             if (!confirm('⚠️ ¿Está seguro de eliminar este parte? Esta acción no se puede deshacer.')) {
                 return;
             }
@@ -1412,13 +1526,12 @@
             try {
                 updateSyncStatus('🔄 Eliminando...', 'online');
                 
-                const parteRef = doc(db, `usuarios/${currentUser.uid}/partes/${parteId}`);
+                const parteRef = doc(db, `partes/${parteId}`);
                 await deleteDoc(parteRef);
                 
                 updateSyncStatus('✅ Parte eliminado', 'online');
                 alert('✅ Parte eliminado exitosamente');
                 
-                // Recargar historial
                 await mostrarHistorial();
             } catch (error) {
                 console.error('Error eliminando parte:', error);
@@ -1439,6 +1552,7 @@
             document.getElementById('btnLimpiar').addEventListener('click', limpiarTodo);
             document.getElementById('btnGuardar').addEventListener('click', guardarParte);
             document.getElementById('btnHistorial').addEventListener('click', mostrarHistorial);
+            document.getElementById('btn-ver-mas').addEventListener('click', toggleVerMas);
 
             document.getElementById('btn-guardar-novedades').addEventListener('click', guardarDetalleNovedades);
             document.getElementById('btn-cerrar-novedades').addEventListener('click', cerrarModalNovedades);
@@ -1513,7 +1627,6 @@
                     document.getElementById('firebase-loading').style.display = 'none';
                     document.getElementById('login-form').style.display = 'block';
                 } else {
-                    // Si no hay usuario, iniciar sesión anónima
                     try {
                         const userCredential = await signInAnonymously(auth);
                         currentUser = userCredential.user;
@@ -1529,4 +1642,3 @@
 
 </body>
 </html>
-
